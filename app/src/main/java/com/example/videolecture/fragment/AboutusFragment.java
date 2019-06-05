@@ -12,10 +12,10 @@ import com.example.videolecture.R;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link DashboardFragment#newInstance} factory method to
+ * Use the {@link AboutusFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends Fragment {
+public class AboutusFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -24,7 +24,7 @@ public class DashboardFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public DashboardFragment() {
+    public AboutusFragment() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class DashboardFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static AboutusFragment newInstance(String param1, String param2) {
+        AboutusFragment fragment = new AboutusFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_aboutus, container, false);
     }
 }
