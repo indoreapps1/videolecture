@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">videolecture</string>
+    <string name="app_name">VdeoLecture</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_about">About Us</string>
+    <string name="title_policy">Privacy Policy</string>
+    <string name="title_conditions">T &amp; C</string>
+    <string name="login_title">Tap Next to verify your account with your phone number. You do not need to manualy enter verification code if the number install in this phone...</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="android:fontFamily">@font/whatever_font</item>-->
+    </style>
+
 </resources>
