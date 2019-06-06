@@ -17,26 +17,31 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login_next;
     EditText edt_phone;
     String mPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
-        edt_phone=findViewById(R.id.edt_phone);
-        mPhone=edt_phone.getText().toString();
-        btn_login_next=findViewById(R.id.btn_login_next);
-        Toast.makeText(this, ""+mPhone, Toast.LENGTH_LONG).show();
+        edt_phone = findViewById(R.id.edt_phone);
+        btn_login_next = findViewById(R.id.btn_login_next);
         btn_login_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = preferences.edit();
-//                editor.putString("phone", mPhone);
-//                editor.apply();
-                Intent intent=new Intent(LoginActivity.this, OtpVerificationActivity.class);
-                intent.putExtra("number", mPhone);
-                startActivity(intent);
-                edt_phone.setText("");
+                mPhone = edt_phone.getText().toString();
+                if (mPhone.length() != 10) {
+                    edt_phone.setError("Please Enter Valid Phone");
+                    edt_phone.requestFocus();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("phone", mPhone);
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
+                    intent.putExtra("phone", mPhone);
+                    startActivity(intent);
+                    edt_phone.setText("");
+                }
             }
         });
     }

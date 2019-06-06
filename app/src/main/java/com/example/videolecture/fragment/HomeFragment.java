@@ -93,45 +93,41 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         category_recycle = view.findViewById(R.id.category_recycle);
         setCategoryApi();
-//        categoryAdapter=new CategoryAdapter(context, );
-//        category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
-//        category_recycle.setAdapter(categoryAdapter);
         return view;
     }
 
     private void setCategoryApi() {
         arrayList = new ArrayList<>();
-        final ProgressDialog dialog = new ProgressDialog(context);
-        dialog.setMessage("Loading");
-        dialog.show();
-        ServiceCaller serviceCaller = new ServiceCaller(context);
-        serviceCaller.callCategoryData(new IAsyncWorkCompletedCallback() {
-            @Override
-            public void onDone(String workName, boolean isComplete) {
-                dialog.dismiss();
-                if (Utility.isOnline(context)) {
+        if (Utility.isOnline(context)) {
+            final ProgressDialog dialog = new ProgressDialog(context);
+            dialog.setMessage("Loading Data Wait..");
+            dialog.show();
+            ServiceCaller serviceCaller = new ServiceCaller(context);
+            serviceCaller.callCategoryData(new IAsyncWorkCompletedCallback() {
+                @Override
+                public void onDone(String workName, boolean isComplete) {
+                    dialog.dismiss();
                     if (isComplete) {
                         MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                         for (Result result : myPojo.getResult()) {
                             arrayList.addAll(Arrays.asList(result));
                         }
                         if (arrayList != null) {
-                            for (int i = 0; i < arrayList.size(); i++) {
-                                categoryAdapter = new CategoryAdapter(context, arrayList);
-                                category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
-                                category_recycle.setAdapter(categoryAdapter);
-                            }
+                            categoryAdapter = new CategoryAdapter(context, arrayList);
+                            category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
+                            category_recycle.setAdapter(categoryAdapter);
                         } else {
-                            Toast.makeText(context, "Please check your list", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Any Category Not Found", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
 
                     }
-                } else {
-                    Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 }

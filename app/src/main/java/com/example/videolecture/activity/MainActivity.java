@@ -10,11 +10,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.videolecture.R;
+import com.example.videolecture.fragment.AboutusFragment;
 import com.example.videolecture.fragment.ConditionsFragment;
-import com.example.videolecture.fragment.DashboardFragment;
 import com.example.videolecture.fragment.HomeFragment;
-import com.example.videolecture.fragment.AboutUsFragment;
 import com.example.videolecture.fragment.PolicyFragment;
+import com.example.videolecture.fragment.ProductFragment;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -31,13 +31,8 @@ public class MainActivity extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_home);
                     openFragment(fragment);
                     return true;
-//                case R.id.navigation_dashboard:
-//                    fragment = new DashboardFragment();
-//                    mTextMessage.setText(R.string.title_dashboard);
-//                    openFragment(fragment);
-//                    return true;
                 case R.id.navigation_about:
-                    fragment = new AboutUsFragment();
+                    fragment = new AboutusFragment();
                     openFragment(fragment);
                     return true;
                 case R.id.navigation_privacy:
@@ -64,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment homeFragment=new HomeFragment();
         openFragment(homeFragment);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        ProductFragment productFragment=ProductFragment.newInstance(0,"","");
+//        openFragment(productFragment);
     }
 
     public void openFragment(Fragment fragment){

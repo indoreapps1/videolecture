@@ -13,13 +13,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.videolecture.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link ProductFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,20 +29,12 @@ public class ProductFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param text Parameter 1.
-     * @param image Parameter 2.
-     * @return A new instance of fragment ProductFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ProductFragment newInstance(int id, String text, String image) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
         args.putInt("Category_id", id);
-        args.putString("category_name", text);
+        args.putString("Category_name", text);
         args.putString("Category_image", image);
         fragment.setArguments(args);
         return fragment;
@@ -69,17 +54,21 @@ public class ProductFragment extends Fragment {
     View view;
     ImageView image_view;
     TextView text_view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        context=getActivity();
-        view= inflater.inflate(R.layout.fragment_product, container, false);
-        text_view=view.findViewById(R.id.text_view);
-        image_view=view.findViewById(R.id.image_view);
-        Toast.makeText(context, Category_name, Toast.LENGTH_SHORT).show();
-        text_view.setText(""+ Category_name);
-        Glide.with(context).load(Category_image).into(image_view);
+        context = getActivity();
+        view = inflater.inflate(R.layout.fragment_product, container, false);
+        init();
         return view;
+    }
+
+    private void init() {
+        text_view = view.findViewById(R.id.text_view);
+        image_view = view.findViewById(R.id.image_view);
+        text_view.setText(Category_name);
+        Glide.with(context).load(Category_image).into(image_view);
     }
 }
