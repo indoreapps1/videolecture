@@ -1,13 +1,18 @@
 package com.example.videolecture.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.videolecture.R;
 import com.example.videolecture.fragment.AboutusFragment;
@@ -61,6 +66,27 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //        ProductFragment productFragment=ProductFragment.newInstance(0,"","");
 //        openFragment(productFragment);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.id_logout){
+            SharedPreferences preferences=getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.clear();
+            editor.apply();
+            Toast.makeText(this, "You have Loggedout", Toast.LENGTH_SHORT).show();
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+        @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
     }
 
     public void openFragment(Fragment fragment){

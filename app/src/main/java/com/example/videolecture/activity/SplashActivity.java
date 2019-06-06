@@ -27,18 +27,18 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
-                String phone = preferences.getString("phone", null);
-                if (phone != null) {
-                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                } else {
-                    /* Create an Intent that will start the Menu-Activity. */
+//                SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+//                String phone = preferences.getString("phone", null);
+//                if (phone != null) {
+//                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+//                    startActivity(mainIntent);
+//                    finish();
+//                } else {
+//                    /* Create an Intent that will start the Menu-Activity. */
                     Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(mainIntent);
-                    finish();
-                }
+//                    finish();
+//                }
             }
         }, 3000);
     }

@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.videolecture.utilities.Contants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ServiceCaller {
 
 //    call category data
     public void callCategoryData(final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
-        final String URL="https://loopfusion.in/videolecture/getCategory.php";
+        final String URL= Contants.BASE_URL+Contants.GetCategory;
         RequestQueue requestQueue=Volley.newRequestQueue(context);
         requestQueue.getCache().clear();
         StringRequest stringRequest=new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -46,6 +47,40 @@ public class ServiceCaller {
 //        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 //        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
     }
+
+//    call login data
+    public void callLoginData(final String phone, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
+        final String URL= Contants.BASE_URL+Contants.Login;
+        RequestQueue requestQueue=Volley.newRequestQueue(context);
+        requestQueue.getCache().clear();
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncWorkCompletedCallback.onDone(response, true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+            }
+        });
+        requestQueue.add(stringRequest);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    //    call All login data
 //    public void callLoginService(final String phone,final IAsyncWorkCompletedCallback workCompletedCallback) {
 //        final String url = "http://dnexusapi.veteransoftwares.com/api/Client?mob="+phone;

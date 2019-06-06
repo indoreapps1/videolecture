@@ -26,4 +26,7 @@
         android:icon="@drawable/ic_security_black_24dp"
         android:title="@string/title_conditions" />
 
+
+
+
 </menu>

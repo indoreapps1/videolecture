@@ -16,7 +16,7 @@ public class Contants {
     public static final String APP_DIRECTORY = "/E" + DEFAULT_APPLICATION_NAME + "Directory/";
     public static final String DATABASE_NAME = "sirjohn.db";// Environment.getExternalStorageDirectory() +  APP_DIRECTORY + "evergreen.db";
 
-    public static String SERVICE_BASE_URL = "http://dnexusapi.veteransoftwares.com/api/";
+    public static String BASE_URL = "https://loopfusion.in/videolecture/";
 
     public static String outputBasePath = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static String outputDirectoryLocation = outputBasePath + "/sirjohnUnzipped/";
@@ -40,7 +40,7 @@ public class Contants {
     public static final String No_DATA_FOUND_MESSAGE = "No Record Found";
     public static final String plans = "values";
     public static final String  Login= "login.php";
-    public static final String otpverify = "otpverify.php";
+    public static final String otpverify = "otpverifiy.php";
     public static final String GetUserProfile = "Login/GetUserProfile";
     public static final String UpdateProfile = "Login/UpdateProfile";
     public static final String AddNewAddress = "addNewAddress.php";
@@ -50,7 +50,7 @@ public class Contants {
     public static final String SELECT_CITY_URL = "Cities/GetAllCities";
     public static final String GET_ALL_LOCALITIES_URL = "Localities/GetAllLocalities";
     public static final String DeleteAddress = "DeleteAddress.php";
-    public static final String GetAllCategory = "getAllCategory.php";
+    public static final String GetCategory = "getCategory.php";
     public static final String GetAllBestSell = "GetAllBestSell.php";
     public static final String GetAllNewArrive = "GetAllNewArrive.php";
     public static final String GetAllProductByCategory = "Product/GetAllProductByCategory";

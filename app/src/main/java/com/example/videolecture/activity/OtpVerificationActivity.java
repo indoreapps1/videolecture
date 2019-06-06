@@ -25,8 +25,8 @@ public class OtpVerificationActivity extends AppCompatActivity {
         btn_login_conti = findViewById(R.id.btn_login_conti);
         txt_Phone = findViewById(R.id.txt_Phone);
         Bundle bundle = getIntent().getExtras();
-        phone = bundle.getString("phone");
-        txt_Phone.setText("Hello " + phone);
+//        phone = bundle.getString("phone");
+        txt_Phone.setText(""+ phone);
         btn_login_conti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

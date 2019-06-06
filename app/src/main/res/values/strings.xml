@@ -5,6 +5,7 @@
     <string name="title_about">About Us</string>
     <string name="title_policy">Privacy Policy</string>
     <string name="title_conditions">T &amp; C</string>
+    <string name="title_settings">Logout</string>
     <string name="login_title">Tap Next to verify your account with your phone number. You do not need to manualy enter verification code if the number install in this phone...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
