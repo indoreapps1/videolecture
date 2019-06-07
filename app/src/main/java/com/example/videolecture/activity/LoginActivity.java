@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
                                     intent.putExtra("phone", mPhone);
                                     startActivity(intent);
+                                    finish();
                                     edt_phone.setText("");
                                     edt_phone.requestFocus();
                                 } else {

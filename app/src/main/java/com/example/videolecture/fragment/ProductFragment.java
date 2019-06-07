@@ -69,6 +69,6 @@ public class ProductFragment extends Fragment {
         text_view = view.findViewById(R.id.text_view);
         image_view = view.findViewById(R.id.image_view);
         text_view.setText(Category_name);
-        Glide.with(context).load(Category_image).into(image_view);
+        Glide.with(context).load(Category_image).placeholder(R.drawable.demo_logo).into(image_view);
     }
 }

@@ -63,6 +63,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
                                             Toasty.success(OtpVerificationActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(OtpVerificationActivity.this, MainActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         }
                                     } else {
                                         edt_otp.setError("Invalid otp");

@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
 /**
  * Created by lalit on 7/25/2017.
  */
@@ -27,190 +26,80 @@ public class ServiceCaller {
         this.context = context;
     }
 
-//    call category data
-    public void callCategoryData(final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
-        final String URL= Contants.BASE_URL+Contants.GetCategory;
-        RequestQueue requestQueue=Volley.newRequestQueue(context);
-        requestQueue.getCache().clear();
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+    //    callCategoryData data
+    public void callCategoryData(final IAsyncWorkCompletedCallback workCompletedCallback) {
+        final String url = Contants.BASE_URL + Contants.GetCategory;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                asyncWorkCompletedCallback.onDone(response, true);
+                workCompletedCallback.onDone(response, true);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+                workCompletedCallback.onDone(error.getMessage(), false);
             }
-        });
-        requestQueue.add(stringRequest);
-//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
-    }
-
-//    call login data
-    public void callLoginData(final String phone, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
-        final String URL= Contants.BASE_URL+Contants.Login;
-        RequestQueue requestQueue=Volley.newRequestQueue(context);
-        requestQueue.getCache().clear();
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                asyncWorkCompletedCallback.onDone(response, true);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
-            }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
+    }
+
+    //    call login data
+    public void callLoginData(final String phone, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.Login;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncWorkCompletedCallback.onDone(response, true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
                 params.put("phone", phone);
                 return params;
             }
         };
-        requestQueue.add(stringRequest);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
 
     }
 
-//    call otp data
-    public void callOtpData(final String phone, final String otp, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
-        final String URL=Contants.BASE_URL+Contants.otpverify;
-        RequestQueue requestQueue=Volley.newRequestQueue(context);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    //    call otp data
+    public void callOtpData(final String phone, final String otp, final IAsyncWorkCompletedCallback workCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.otpverify;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                asyncWorkCompletedCallback.onDone(response, true);
+                workCompletedCallback.onDone(response, true);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+                workCompletedCallback.onDone(error.getMessage(), false);
             }
-        })
-        {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("phone", phone);
                 params.put("otp", otp);
                 return params;
             }
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    //    call All login data
-//    public void callLoginService(final String phone,final IAsyncWorkCompletedCallback workCompletedCallback) {
-//        final String url = "http://dnexusapi.veteransoftwares.com/api/Client?mob="+phone;
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                workCompletedCallback.onDone(response, true);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                workCompletedCallback.onDone(error.getMessage(), false);
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-////                params.put("email", phone);
-////                params.put("password", password);
-//                return params;
-//            }
-//        };
-//
-////        RequestQueue requestQueue = Volley.newRequestQueue(context);
-////        requestQueue.add(stringRequest);
-//
-//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
-//    }
-//
-////    call otp data
-//    public void callOtpService(final String phone, final String otp, final IAsyncWorkCompletedCallback workCompletedCallback){
-//        final String url= "http://dnexusapi.veteransoftwares.com/api/VerifyOTP?mob=" +phone+"&otp="+otp;
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                workCompletedCallback.onDone(response, true);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                workCompletedCallback.onDone(error.getMessage(), false);
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-////                params.put("email", phone);
-////                params.put("password", password);
-//                return params;
-//            }
-//        };
-//
-////        RequestQueue requestQueue = Volley.newRequestQueue(context);
-////        requestQueue.add(stringRequest);
-//
-//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
-//    }
-//
-//
-//    //    call Plan Service
-//    public void callPlanService(final IAsyncWorkCompletedCallback workCompletedCallback) {
-//        final String Url = Contants.SERVICE_BASE_URL + Contants.plans;
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, Url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                workCompletedCallback.onDone(response, true);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                workCompletedCallback.onDone(error.getMessage(), false);
-//            }
-//        });
-//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(200000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        AppController.getInstance().addToRequestQueue(stringRequest);
-//    }
-//
-//
-//    //    call show all tv
-//    public void callShowAllTv(final IAsyncWorkCompletedCallback workCompletedCallback) {
-//        final String url = "http://dnexusapi.veteransoftwares.com/api/alldata";
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                workCompletedCallback.onDone(response, true);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                workCompletedCallback.onDone(error.getMessage(), false);
-//            }
-//        });
-//
-//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(200000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        AppController.getInstance().addToRequestQueue(stringRequest);
-//    }
-
 }
