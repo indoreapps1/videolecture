@@ -63,9 +63,42 @@ public class ServiceCaller {
             public void onErrorResponse(VolleyError error) {
                 asyncWorkCompletedCallback.onDone(error.getMessage(), false);
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params=new HashMap<>();
+                params.put("phone", phone);
+                return params;
+            }
+        };
         requestQueue.add(stringRequest);
 
+    }
+
+//    call otp data
+    public void callOtpData(final String phone, final String otp, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback){
+        final String URL=Contants.BASE_URL+Contants.otpverify;
+        RequestQueue requestQueue=Volley.newRequestQueue(context);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncWorkCompletedCallback.onDone(response, true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params=new HashMap<>();
+                params.put("phone", phone);
+                params.put("otp", otp);
+                return params;
+            }
+        };
     }
 
 

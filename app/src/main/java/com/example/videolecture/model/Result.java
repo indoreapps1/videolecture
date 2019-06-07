@@ -8,6 +8,42 @@ public class Result {
 
     private String categoryName;
 
+    private String loginId;
+
+    private String phone;
+
+    private String status;
+
+    public String getLoginId ()
+    {
+        return loginId;
+    }
+
+    public void setLoginId (String loginId)
+    {
+        this.loginId = loginId;
+    }
+
+    public String getPhone ()
+    {
+        return phone;
+    }
+
+    public void setPhone (String phone)
+    {
+        this.phone = phone;
+    }
+
+    public String getStatus ()
+    {
+        return status;
+    }
+
+    public void setStatus (String status)
+    {
+        this.status = status;
+    }
+
     public String getImage ()
     {
         return image;

@@ -33,30 +33,30 @@ public class LoginActivity extends AppCompatActivity {
         btn_login_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Validation()){
-                    if (Utility.isOnline(LoginActivity.this)){
-                        final ProgressDialog dialog=new ProgressDialog(LoginActivity.this);
+                if (Validation()) {
+                    if (Utility.isOnline(LoginActivity.this)) {
+                        final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
                         dialog.setMessage("Loading...");
                         dialog.show();
-                        ServiceCaller serviceCaller=new ServiceCaller(LoginActivity.this);
+                        ServiceCaller serviceCaller = new ServiceCaller(LoginActivity.this);
                         serviceCaller.callLoginData(mPhone, new IAsyncWorkCompletedCallback() {
                             @Override
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();
-                                if (isComplete){
+                                if (isComplete) {
                                     Toast.makeText(LoginActivity.this, "Otp Send Successfully", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, OtpVerificationActivity.class));
+                                    Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
+                                    intent.putExtra("phone", mPhone);
+                                    startActivity(intent);
                                     edt_phone.setText("");
                                     edt_phone.requestFocus();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(LoginActivity.this, "Otp does not send", Toast.LENGTH_SHORT).show();
 
                                 }
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -66,13 +66,13 @@ public class LoginActivity extends AppCompatActivity {
 //                    SharedPreferences.Editor editor = preferences.edit();
 //                    editor.putString("phone", mPhone);
 //                    editor.apply();
-                    Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
-                    intent.putExtra("phone", mPhone);
-                    startActivity(intent);
-                    edt_phone.setText("");
+//                    Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
+//                    intent.putExtra("phone", mPhone);
+//                    startActivity(intent);
+//                    edt_phone.setText("");
 //                }
 
-                }
+            }
         });
     }
 
@@ -82,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             edt_phone.setError("Please Enter Phone Number");
             edt_phone.requestFocus();
             return false;
-        }
-        else if (mPhone.length() != 10) {
+        } else if (mPhone.length() != 10) {
             edt_phone.setError("Please Enter Valid Phone");
             edt_phone.requestFocus();
             return false;
