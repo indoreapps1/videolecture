@@ -8,18 +8,18 @@ public class Result {
 
     private String categoryName;
 
-    private String loginId;
+    private int loginId;
 
     private String phone;
 
     private String status;
 
-    public String getLoginId ()
+    public int getLoginId ()
     {
         return loginId;
     }
 
-    public void setLoginId (String loginId)
+    public void setLoginId (int loginId)
     {
         this.loginId = loginId;
     }

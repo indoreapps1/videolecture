@@ -20,6 +20,8 @@ import com.example.videolecture.model.Result;
 import com.example.videolecture.utilities.Utility;
 import com.google.gson.Gson;
 
+import es.dmoral.toasty.Toasty;
+
 public class OtpVerificationActivity extends AppCompatActivity {
 
     TextView txt_Phone;
@@ -36,43 +38,46 @@ public class OtpVerificationActivity extends AppCompatActivity {
         edt_otp = findViewById(R.id.edt_otp);
         Bundle bundle = getIntent().getExtras();
         phone = bundle.getString("phone");
-        txt_Phone.setText(""+ phone);
+        txt_Phone.setText(phone);
         btn_login_conti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(OtpVerificationActivity.this, MainActivity.class));
-                if (Validation()){
-                    if (Utility.isOnline(OtpVerificationActivity.this)){
-                        final ProgressDialog dialog=new ProgressDialog(OtpVerificationActivity.this);
-                        dialog.setMessage("Loading...");
+                if (Validation()) {
+                    if (Utility.isOnline(OtpVerificationActivity.this)) {
+                        final ProgressDialog dialog = new ProgressDialog(OtpVerificationActivity.this);
+                        dialog.setMessage("Verify Otp Wait.....");
                         dialog.show();
-                        ServiceCaller serviceCaller=new ServiceCaller(OtpVerificationActivity.this);
+                        ServiceCaller serviceCaller = new ServiceCaller(OtpVerificationActivity.this);
                         serviceCaller.callOtpData(phone, otp, new IAsyncWorkCompletedCallback() {
                             @Override
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();
-                                if (isComplete){
-                                    if (!workName.equalsIgnoreCase("invalid otp")){
-                                        Toast.makeText(OtpVerificationActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                                        Intent intent=new Intent(OtpVerificationActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(OtpVerificationActivity.this, "Invalid otp", Toast.LENGTH_SHORT).show();
+                                if (isComplete) {
+                                    if (!workName.equalsIgnoreCase("invalid otp")) {
+                                        MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
+                                        for (Result result : myPojo.getResult()) {
+                                            SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putInt("id", result.getLoginId());
+                                            editor.apply();
+                                            Toasty.success(OtpVerificationActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(OtpVerificationActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    } else {
+                                        edt_otp.setError("Invalid otp");
+                                        edt_otp.requestFocus();
 
                                     }
-                                }
-                                else {
-                                    Toast.makeText(OtpVerificationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toasty.error(OtpVerificationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
                                 }
                             }
                         });
 
-                    }
-                    else {
-                        Toast.makeText(OtpVerificationActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toasty.info(OtpVerificationActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -80,14 +85,13 @@ public class OtpVerificationActivity extends AppCompatActivity {
         });
     }
 
-    private boolean Validation(){
-        otp=edt_otp.getText().toString();
-        if (otp.length()==0){
+    private boolean Validation() {
+        otp = edt_otp.getText().toString();
+        if (otp.length() == 0) {
             edt_otp.setError("Enter Otp");
             edt_otp.requestFocus();
             return false;
-        }
-        else if (otp.length()!=4){
+        } else if (otp.length() != 4) {
             edt_otp.setError("Enter Valid Otp");
             edt_otp.requestFocus();
             return false;

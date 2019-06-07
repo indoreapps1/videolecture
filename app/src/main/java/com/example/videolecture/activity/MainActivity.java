@@ -1,6 +1,7 @@
 package com.example.videolecture.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.videolecture.R;
-import com.example.videolecture.fragment.AboutusFragment;
+import com.example.videolecture.fragment.AboutUsFragment;
 import com.example.videolecture.fragment.ConditionsFragment;
 import com.example.videolecture.fragment.HomeFragment;
 import com.example.videolecture.fragment.PolicyFragment;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     openFragment(fragment);
                     return true;
                 case R.id.navigation_about:
-                    fragment = new AboutusFragment();
+                    fragment = new AboutUsFragment();
                     openFragment(fragment);
                     return true;
                 case R.id.navigation_privacy:
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
-        HomeFragment homeFragment=new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
         openFragment(homeFragment);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //        ProductFragment productFragment=ProductFragment.newInstance(0,"","");
@@ -70,33 +72,33 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.id_logout){
-            SharedPreferences preferences=getSharedPreferences("Login", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=preferences.edit();
+        if (item.getItemId() == R.id.id_logout) {
+            SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
             editor.apply();
-            Toast.makeText(this, "You have Loggedout", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_menu, menu);
         return true;
     }
 
-    public void openFragment(Fragment fragment){
-        FragmentManager manager=getSupportFragmentManager();
-                manager.beginTransaction()
-                        .replace(R.id.container, fragment)
+    public void openFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
-    public void setActionBartitle(String title){
+    public void setActionBartitle(String title) {
         getSupportActionBar().setTitle(title);
     }
 }
