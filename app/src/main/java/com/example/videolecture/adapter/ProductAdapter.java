@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,14 +31,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @NonNull
     @Override
     public ProductAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_category, viewGroup, false);
+        View view= LayoutInflater.from(context).inflate(R.layout.item_product, viewGroup, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder myViewHolder, int i) {
-        Glide.with(context).load(resultList.get(i).getImage()).into(myViewHolder.item_category_img);
-        myViewHolder.item_category_txt.setText(resultList.get(i).getCategoryName());
+        Glide.with(context).load(R.drawable.download).into(myViewHolder.item_video);
+        myViewHolder.item_txt_title.setText(resultList.get(i).getV_title());
+        myViewHolder.item_txt_description.setText(resultList.get(i).getV_description());
+        myViewHolder.item_txt_review.setText(resultList.get(i).getV_review());
     }
 
     @Override
@@ -44,15 +49,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView item_category_img;
-        TextView item_category_txt;
-        CardView item_category_card;
+        ImageView item_video;
+        TextView item_txt_title, item_txt_description, item_txt_review;
+        EditText item_edt_ques;
+        RatingBar item_rating;
+        Button item_btn_submit;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_category_img=itemView.findViewById(R.id.item_category_img);
-            item_category_txt=itemView.findViewById(R.id.item_category_txt);
-            item_category_card=itemView.findViewById(R.id.item_category_card);
+            item_video=itemView.findViewById(R.id.item_video);
+            item_txt_title=itemView.findViewById(R.id.item_txt_title);
+            item_txt_description=itemView.findViewById(R.id.item_txt_description);
+            item_txt_review=itemView.findViewById(R.id.item_txt_review);
+            item_edt_ques=itemView.findViewById(R.id.item_edt_ques);
+            item_btn_submit=itemView.findViewById(R.id.item_btn_submit);
+            item_rating=itemView.findViewById(R.id.item_rating);
         }
     }
 }

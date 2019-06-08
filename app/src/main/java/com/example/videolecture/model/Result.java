@@ -14,6 +14,31 @@ public class Result {
 
     private String status;
 
+    private String v_title;
+
+    public Result(String v_title, String v_description, String v_review) {
+        this.v_title = v_title;
+        this.v_description = v_description;
+        this.v_review = v_review;
+    }
+
+    public String getV_title() {
+        return v_title;
+    }
+
+    public String getV_description() {
+        return v_description;
+    }
+
+    public String getV_review() {
+        return v_review;
+    }
+
+    private String v_description;
+
+    private String v_review;
+
+
     public int getLoginId ()
     {
         return loginId;
