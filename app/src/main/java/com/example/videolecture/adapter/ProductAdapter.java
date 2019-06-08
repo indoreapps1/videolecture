@@ -3,6 +3,7 @@ package com.example.videolecture.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         myViewHolder.item_txt_title.setText(resultList.get(i).getV_title());
         myViewHolder.item_txt_description.setText(resultList.get(i).getV_description());
         myViewHolder.item_txt_review.setText(resultList.get(i).getV_review());
+        myViewHolder.recycle_que_ans.setLayoutManager(new LinearLayoutManager(context));
+        myViewHolder.recycle_que_ans.setAdapter(new QueAnsAdapter(context, resultList));
     }
 
     @Override
@@ -50,10 +53,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView item_video;
-        TextView item_txt_title, item_txt_description, item_txt_review;
+        TextView item_txt_title, item_txt_description, item_txt_review, item_txt_que_time;
         EditText item_edt_ques;
         RatingBar item_rating;
         Button item_btn_submit;
+        RecyclerView recycle_que_ans;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,8 +66,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             item_txt_description=itemView.findViewById(R.id.item_txt_description);
             item_txt_review=itemView.findViewById(R.id.item_txt_review);
             item_edt_ques=itemView.findViewById(R.id.item_edt_ques);
+            item_txt_que_time=itemView.findViewById(R.id.item_txt_que_time);
             item_btn_submit=itemView.findViewById(R.id.item_btn_submit);
             item_rating=itemView.findViewById(R.id.item_rating);
+            recycle_que_ans=itemView.findViewById(R.id.recycle_que_ans);
         }
     }
 }

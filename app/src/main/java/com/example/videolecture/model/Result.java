@@ -16,6 +16,26 @@ public class Result {
 
     private String v_title;
 
+    private String ques;
+
+    private String ans;
+
+//    public Result(String ans) {
+//        this.ans = ans;
+//    }
+
+    public String getAns() {
+        return ans;
+    }
+
+    public Result(String ques) {
+        this.ques = ques;
+    }
+
+    public String getQues() {
+        return ques;
+    }
+
     public Result(String v_title, String v_description, String v_review) {
         this.v_title = v_title;
         this.v_description = v_description;
