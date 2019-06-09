@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         app:cardElevation="@dimen/dim_value_5"
-        android:layout_marginTop="@dimen/dim_value_5"
+        android:layout_margin="@dimen/dim_value_5"
         app:cardCornerRadius="@dimen/dim_value_5">
 
         <LinearLayout
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/download"
-        android:layout_marginTop="@dimen/dim_value_5"
+        android:layout_margin="@dimen/dim_value_5"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -62,7 +62,7 @@
         <RatingBar
             android:id="@+id/item_rating"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dim_value_40"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:numStars="5"
             android:scaleX="0.5"
@@ -72,7 +72,7 @@
         <TextView
             android:id="@+id/item_txt_review"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:textColor="@color/colorBlack"
             android:gravity="center"
             android:layout_gravity="end"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:paddingLeft="@dimen/dim_value_5"
-            android:hint="Write your suggestion here"
+            android:hint="Write your question here"
             android:textColor="@color/colorBlack"
             android:layout_marginRight="@dimen/dim_value_5"
             android:textSize="12sp"
