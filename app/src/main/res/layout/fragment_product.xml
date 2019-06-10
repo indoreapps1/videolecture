@@ -46,39 +46,33 @@
 
                 <TextView
                     android:id="@+id/txt_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorBlack"
                     android:gravity="left"
                     android:paddingLeft="@dimen/dim_value_5"
-                    android:layout_alignLeft="@id/txt_time"
                     android:textSize="14sp"
-                    android:textStyle="bold"/>
+                    android:layout_alignParentStart="true"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true" />
 
                     <TextView
                         android:id="@+id/txt_time"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
                         android:gravity="right"
                         android:paddingRight="@dimen/dim_value_5"
                         android:textSize="12sp"
+                        android:layout_alignParentRight="true"
                         android:layout_alignRight="@id/txt_title"/>
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/txt_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:gravity="left"
-                    android:layout_marginTop="@dimen/dim_value_5"
-                    android:paddingLeft="@dimen/dim_value_5"
-                    android:textSize="12sp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="end"
@@ -88,10 +82,10 @@
                     <RatingBar
                         android:id="@+id/rating"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
+                        android:layout_height="@dimen/dim_value_40"
                         android:numStars="5"
                         android:rating="1"
+                        android:layout_alignParentLeft="true"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
                         android:stepSize="1.0"/>
@@ -99,15 +93,25 @@
                     <TextView
                         android:id="@+id/txt_review"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dim_value_40"
                         android:textColor="@color/colorBlack"
                         android:gravity="center"
-                        android:layout_gravity="end"
+                        android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/dim_value_5"
                         android:textSize="14sp"/>
 
-                </LinearLayout>
-
+                </RelativeLayout>
+                <com.example.videolecture.utilities.ReadMoreTextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="left"
+                    app:trimMode="trimModeLine"
+                    app:trimLines="3"
+                    app:showTrimExpandedText="true"
+                    android:layout_marginTop="@dimen/dim_value_5"
+                    android:textSize="12sp"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

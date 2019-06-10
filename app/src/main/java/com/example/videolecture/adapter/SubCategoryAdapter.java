@@ -57,7 +57,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             item_txt_video_name=itemView.findViewById(R.id.item_txt_video_name);
-            item_txt_video_icon=itemView.findViewById(R.id.item_txt_video_icon);
+//            item_txt_video_icon=itemView.findViewById(R.id.item_txt_video_icon);
             item_card_sub_category=itemView.findViewById(R.id.item_card_sub_category);
         }
     }

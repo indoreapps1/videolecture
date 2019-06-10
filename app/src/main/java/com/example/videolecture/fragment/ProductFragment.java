@@ -20,6 +20,7 @@ import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
+import com.example.videolecture.utilities.ReadMoreTextView;
 import com.example.videolecture.utilities.Utility;
 import com.google.gson.Gson;
 
@@ -63,7 +64,8 @@ public class ProductFragment extends Fragment {
     Context context;
     View view;
     ImageView image_view, video;
-    TextView text_view, txt_title, txt_time, txt_description, txt_review;
+    TextView text_view, txt_title, txt_time, txt_review;
+    ReadMoreTextView txt_description;
     List<Result> list;
 
     @Override
