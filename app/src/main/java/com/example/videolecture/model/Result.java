@@ -4,7 +4,7 @@ public class Result {
 
     private String image;
 
-    private int id;
+    private String id;
 
     private String categoryName;
 
@@ -14,13 +14,63 @@ public class Result {
 
     private String status;
 
+    private String subcategoryId;
+
+    private String title;
+
+    private String categoryId;
+
+    public String getSubcategoryId ()
+    {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId (String subcategoryId)
+    {
+        this.subcategoryId = subcategoryId;
+    }
+
+    public String getTitle ()
+    {
+        return title;
+    }
+
+    public void setTitle (String title)
+    {
+        this.title = title;
+    }
+
+    public String getCategoryId ()
+    {
+        return categoryId;
+    }
+
+    public void setCategoryId (String categoryId)
+    {
+        this.categoryId = categoryId;
+    }
+
+
+
+
+
+
     private String v_title;
-
-    private String ques;
-
+//
+//    private String ques;
+//
     private String ans;
 
-//    public Result(String ans) {
+    private String v_name;
+
+    public Result(String v_name){
+        this.v_name=v_name;
+    }
+    public String getV_name() {
+        return v_name;
+    }
+
+    //    public Result(String ans) {
 //        this.ans = ans;
 //    }
 
@@ -28,13 +78,13 @@ public class Result {
         return ans;
     }
 
-    public Result(String ques) {
-        this.ques = ques;
-    }
+//    public Result(String ques) {
+//        this.ques = ques;
+//    }
 
-    public String getQues() {
-        return ques;
-    }
+//    public String getQues() {
+//        return ques;
+//    }
 
     public Result(String v_title, String v_description, String v_review) {
         this.v_title = v_title;
@@ -57,6 +107,57 @@ public class Result {
     private String v_description;
 
     private String v_review;
+
+
+
+    private String productId;
+
+
+    private String description;
+
+    private String video;
+
+    private String time;
+
+    public String getProductId ()
+    {
+        return productId;
+    }
+
+    public void setProductId (String productId)
+    {
+        this.productId = productId;
+    }
+
+    public String getDescription ()
+    {
+        return description;
+    }
+
+    public void setDescription (String description)
+    {
+        this.description = description;
+    }
+
+    public String getVideo ()
+    {
+        return video;
+    }
+
+    public void setVideo (String video)
+    {
+        this.video = video;
+    }
+
+    public String getTime ()
+    {
+        return time;
+    }
+
+    public void setTime (String time)
+    {
+        this.time = time;
+    }
 
 
     public int getLoginId ()
@@ -99,12 +200,12 @@ public class Result {
         this.image = image;
     }
 
-    public int getId ()
+    public String getId ()
     {
         return id;
     }
 
-    public void setId (int id)
+    public void setId (String id)
     {
         this.id = id;
     }

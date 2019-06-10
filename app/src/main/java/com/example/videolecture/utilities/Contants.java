@@ -51,9 +51,10 @@ public class Contants {
     public static final String GET_ALL_LOCALITIES_URL = "Localities/GetAllLocalities";
     public static final String DeleteAddress = "DeleteAddress.php";
     public static final String GetCategory = "getCategory.php";
+    public static final String GetSubCategory = "getSubCategory.php";
     public static final String GetAllBestSell = "GetAllBestSell.php";
     public static final String GetAllNewArrive = "GetAllNewArrive.php";
-    public static final String GetAllProductByCategory = "Product/GetAllProductByCategory";
+    public static final String GetProductData = "getProductData.php";
     public static final String GetAllStoreByLocality = "Store/GetAllStoreByLocality";
     public static final String GetStoreDetailsById = "Store/GetStoreDetailsById";
     public static final String ApplyPromoCode = "PromoCode/ApplyPromoCode";

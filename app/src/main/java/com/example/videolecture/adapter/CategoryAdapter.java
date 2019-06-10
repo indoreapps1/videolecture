@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.videolecture.R;
 import com.example.videolecture.fragment.ProductFragment;
+import com.example.videolecture.fragment.SubCategoryFragment;
 import com.example.videolecture.model.Result;
 
 import java.util.List;
@@ -43,8 +44,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         myViewHolder.item_category_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductFragment productFragment = ProductFragment.newInstance(resultList.get(i).getId(), resultList.get(i).getCategoryName(), resultList.get(i).getImage());
-                moveFragment(productFragment);
+//                ProductFragment productFragment = ProductFragment.newInstance(resultList.get(i).getId(), resultList.get(i).getCategoryName(), resultList.get(i).getImage());
+                SubCategoryFragment subCategoryFragment=SubCategoryFragment.newInstance(resultList.get(i).getId(), resultList.get(i).getImage(), resultList.get(i).getCategoryName());
+                moveFragment(subCategoryFragment);
             }
         });
     }

@@ -38,7 +38,7 @@ public class QueAnsAdapter extends RecyclerView.Adapter<QueAnsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.item_txt_que.setText(resultList.get(i).getQues());
+//        myViewHolder.item_txt_que.setText(resultList.get(i).getQues());
         myViewHolder.recycle_inner_ans.setLayoutManager(new LinearLayoutManager(context));
         myViewHolder.recycle_inner_ans.setAdapter(new AnswerAdater(context, resultList));
     }
