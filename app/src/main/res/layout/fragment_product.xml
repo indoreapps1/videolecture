@@ -85,6 +85,7 @@
                         android:layout_height="@dimen/dim_value_40"
                         android:numStars="5"
                         android:rating="1"
+                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
@@ -107,9 +108,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorBlack"
                     android:gravity="left"
-                    app:trimMode="trimModeLine"
-                    app:trimLines="3"
-                    app:showTrimExpandedText="true"
                     android:layout_marginTop="@dimen/dim_value_5"
                     android:textSize="12sp"/>
             </LinearLayout>
