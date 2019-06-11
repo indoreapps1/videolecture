@@ -2,6 +2,7 @@ package com.example.videolecture.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,47 +88,44 @@ public class ProductFragment extends Fragment {
         txt_review = view.findViewById(R.id.txt_review);
         video = view.findViewById(R.id.video);
         txt_review.setText("5480k");
-        list=new ArrayList<>();
-        if (Utility.isOnline(context)){
+        list = new ArrayList<>();
+        SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        int loginid = preferences.getInt("id", 0);
+        if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Loading Data..");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callAllProductData(sub_category_id, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callAllProductData(sub_category_id,loginid, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
-                    if (isComplete){
-                        if (!workName.trim().equalsIgnoreCase("no")){
+                    if (isComplete) {
+                        if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
 //                                list.addAll(Arrays.asList(result));
+                                txt_review.setText(result.getTotalRating()+"*");
                                 txt_title.setText(result.getTitle());
                                 txt_description.setText(result.getDescription());
                                 txt_time.setText(result.getTime());
 
                             }
 
-                        }
-                        else {
+                        } else {
                             Toasty.error(context, "No data found", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    else {
+                    } else {
                         Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 }
 
             });
 
-        }
-        else {
+        } else {
             Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 
 }

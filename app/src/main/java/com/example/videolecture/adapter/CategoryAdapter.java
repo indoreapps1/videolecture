@@ -44,7 +44,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         myViewHolder.item_category_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ProductFragment productFragment = ProductFragment.newInstance(resultList.get(i).getId(), resultList.get(i).getCategoryName(), resultList.get(i).getImage());
                 SubCategoryFragment subCategoryFragment=SubCategoryFragment.newInstance(resultList.get(i).getId(), resultList.get(i).getImage(), resultList.get(i).getCategoryName());
                 moveFragment(subCategoryFragment);
             }

@@ -19,6 +19,18 @@ public class Result {
     private String title;
 
     private String categoryId;
+    private String totalRating;
+
+
+    public String getTotalRating ()
+    {
+        return totalRating;
+    }
+
+    public void setTotalRating (String totalRating)
+    {
+        this.totalRating = totalRating;
+    }
 
     public String getSubcategoryId ()
     {
@@ -55,58 +67,7 @@ public class Result {
 
 
 
-    private String v_title;
-//
-//    private String ques;
-//
-    private String ans;
 
-    private String v_name;
-
-    public Result(String v_name){
-        this.v_name=v_name;
-    }
-    public String getV_name() {
-        return v_name;
-    }
-
-    //    public Result(String ans) {
-//        this.ans = ans;
-//    }
-
-    public String getAns() {
-        return ans;
-    }
-
-//    public Result(String ques) {
-//        this.ques = ques;
-//    }
-
-//    public String getQues() {
-//        return ques;
-//    }
-
-    public Result(String v_title, String v_description, String v_review) {
-        this.v_title = v_title;
-        this.v_description = v_description;
-        this.v_review = v_review;
-    }
-
-    public String getV_title() {
-        return v_title;
-    }
-
-    public String getV_description() {
-        return v_description;
-    }
-
-    public String getV_review() {
-        return v_review;
-    }
-
-    private String v_description;
-
-    private String v_review;
 
 
 
