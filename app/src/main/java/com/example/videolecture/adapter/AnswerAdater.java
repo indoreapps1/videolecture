@@ -31,7 +31,8 @@ public class AnswerAdater extends RecyclerView.Adapter<AnswerAdater.MYViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AnswerAdater.MYViewHolder myViewHolder, int i) {
-        myViewHolder.item_txt_ans.setText(resultList.get(i).getAns());
+        myViewHolder.item_txt_ans.setText(resultList.get(i).getAnswer());
+        myViewHolder.item_txt_ans_time.setText(resultList.get(i).getTime());
     }
 
     @Override
@@ -42,10 +43,11 @@ public class AnswerAdater extends RecyclerView.Adapter<AnswerAdater.MYViewHolder
     }
 
     public class MYViewHolder extends RecyclerView.ViewHolder {
-        TextView item_txt_ans;
+        TextView item_txt_ans, item_txt_ans_time;
         public MYViewHolder(@NonNull View itemView) {
             super(itemView);
             item_txt_ans=itemView.findViewById(R.id.item_txt_ans);
+            item_txt_ans_time=itemView.findViewById(R.id.item_txt_ans_time);
         }
     }
 }

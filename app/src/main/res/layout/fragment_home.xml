@@ -16,7 +16,7 @@
         android:text="Select Category"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"
-        android:textStyle="normal" />
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/category_recycle"

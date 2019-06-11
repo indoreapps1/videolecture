@@ -17,21 +17,26 @@
 
         <TextView
             android:id="@+id/item_txt_que"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.7"
             android:textColor="@color/colorBlack"
             android:textSize="14sp"
+            android:layout_gravity="left"
+            android:paddingLeft="@dimen/dim_value_5"
+            android:gravity="left"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/item_txt_view_more"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_txt_ques_time"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="View more"
-            android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:layout_weight="0.3"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:paddingRight="@dimen/dim_value_5"
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -42,36 +47,18 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dim_value_5"
-        android:layout_gravity="center"
-        android:gravity="center">
 
     <EditText
         android:id="@+id/item_edt_ans"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
         android:paddingLeft="@dimen/dim_value_5"
         android:hint="Write your suggestion here"
         android:textColor="@color/colorBlack"
-        android:layout_marginRight="@dimen/dim_value_5"
+        android:layout_marginTop="@dimen/dim_value_5"
         android:textSize="12sp"
         android:singleLine="true"/>
 
-        <TextView
-            android:id="@+id/item_txt_ans_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:textSize="12sp"/>
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/item_btn_submit"
@@ -84,6 +71,7 @@
         android:textSize="14sp"
         android:gravity="center"
         android:layout_gravity="end"
+        android:layout_marginTop="@dimen/dim_value_5"
         android:layout_marginBottom="@dimen/dim_value_10"/>
 
 </LinearLayout>

@@ -44,8 +44,8 @@ public class Contants {
     public static final String GetUserProfile = "Login/GetUserProfile";
     public static final String UpdateProfile = "Login/UpdateProfile";
     public static final String AddNewAddress = "addNewAddress.php";
-    public static final String UpdateAddress = "UpdateAddress.php";
-    public static final String GetAllAddress = "GetAllAddress.php";
+    public static final String UploadQuesAns = "uploadQuestionAns.php";
+    public static final String GetQuesAns = "getQuestionAns.php";
     public static final String GetAllAddressById = "GetAllAddressById.php";
     public static final String SELECT_CITY_URL = "Cities/GetAllCities";
     public static final String GET_ALL_LOCALITIES_URL = "Localities/GetAllLocalities";
