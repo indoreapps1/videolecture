@@ -4,7 +4,7 @@ public class Result {
 
     private String image;
 
-    private String id;
+    private int id;
 
     private String categoryName;
 
@@ -131,11 +131,11 @@ public class Result {
         this.image = image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

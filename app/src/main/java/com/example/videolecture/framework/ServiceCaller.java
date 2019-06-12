@@ -104,7 +104,7 @@ public class ServiceCaller {
     }
 
     //    call sub category data
-    public void callSubCategoryData(final String id, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+    public void callSubCategoryData(final int id, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
         final String URL = Contants.BASE_URL + Contants.GetSubCategory;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -120,7 +120,7 @@ public class ServiceCaller {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id);
+                params.put("id", String.valueOf(id));
                 return params;
             }
         };

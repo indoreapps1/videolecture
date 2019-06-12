@@ -90,10 +90,10 @@ public class ProductFragment extends Fragment {
         // Inflate the layout for this fragment
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_product, container, false);
-        reycycle_ques_ans=view.findViewById(R.id.reycycle_ques_ans);
+        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
         SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         loginid = preferences.getInt("id", 0);
-        dbHelper=new DbHelper(context);
+        dbHelper = new DbHelper(context);
         init();
         uploadQues();
         showQuesAns();
@@ -107,11 +107,8 @@ public class ProductFragment extends Fragment {
         txt_time = view.findViewById(R.id.txt_time);
         txt_description = view.findViewById(R.id.txt_description);
         txt_review = view.findViewById(R.id.txt_review);
-//        video = view.findViewById(R.id.video);
         reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
         list = new ArrayList<>();
-//        SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
-//        loginid = preferences.getInt("id", 0);
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Loading Data..");
@@ -125,9 +122,7 @@ public class ProductFragment extends Fragment {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
-//                                list.addAll(Arrays.asList(result));
                                 video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL, "Lk");
-                                video_player.thumbImageView.setImageURI(Uri.parse("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640"));
                                 txt_review.setText(result.getTotalRating() + "*");
                                 txt_title.setText(result.getTitle());
                                 txt_description.setText(result.getDescription());
@@ -157,44 +152,35 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 quesTxt = edt_ques.getText().toString();
-                if (Utility.isOnline(context)) {
-                    final ProgressDialog dialog = new ProgressDialog(context);
-                    dialog.setMessage("Loading Data..");
-                    dialog.show();
-                    ServiceCaller serviceCaller = new ServiceCaller(context);
-                    serviceCaller.callUploadQuesData(loginid, quesTxt, sub_category_id, new IAsyncWorkCompletedCallback() {
-                        @Override
-                        public void onDone(String workName, boolean isComplete) {
-                            dialog.dismiss();
-                            if (isComplete){
-                                if (workName.trim().equalsIgnoreCase("success")){
-                                    if (quesTxt.length()!=0){
+                if (quesTxt.length() != 0) {
+                    if (Utility.isOnline(context)) {
+                        final ProgressDialog dialog = new ProgressDialog(context);
+                        dialog.setMessage("Loading Data..");
+                        dialog.show();
+                        ServiceCaller serviceCaller = new ServiceCaller(context);
+                        serviceCaller.callUploadQuesData(loginid, quesTxt, sub_category_id, new IAsyncWorkCompletedCallback() {
+                            @Override
+                            public void onDone(String workName, boolean isComplete) {
+                                dialog.dismiss();
+                                if (isComplete) {
+                                    if (workName.trim().equalsIgnoreCase("success")) {
                                         showQuesAns();
-                                        Collections.reverse(resultList);
                                         Toast.makeText(context, "Your question uploaded successfull", Toast.LENGTH_SHORT).show();
                                         edt_ques.setText("");
+                                    } else {
+                                        Toasty.error(context, "Your question does not upload", Toast.LENGTH_SHORT).show();
                                     }
-                                    else {
-                                        Toasty.error(context, "Please enter question", Toast.LENGTH_SHORT).show();
-
-                                    }
-
-                                }
-
-                                else {
-                                    Toasty.error(context, "Your question does not upload", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
-                            else {
-                                Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-
-                else {
-                    Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    edt_ques.requestFocus();
+                    edt_ques.setError("Enter Question Please");
                 }
             }
         });
@@ -206,38 +192,30 @@ public class ProductFragment extends Fragment {
         resultList = new ArrayList<>();
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
-            dialog.setMessage("Loading Data...");
+            dialog.setMessage("Fetching Data...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
             serviceCaller.callShowQuesAnsData(loginid, sub_category_id, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
-                   if (isComplete){
-                       if (!workName.trim().equalsIgnoreCase("no")){
-                           MyPojo myPojo=new Gson().fromJson(workName, MyPojo.class);
-                           for (Result result:myPojo.getResult()){
-                               resultList.addAll(Arrays.asList(result));
-                           }
-                           if (resultList!=null && resultList.size()>0){
-                               for (Result result:resultList){
-                                   dbHelper.upsertProductData(result);
-                               }
+                    if (isComplete) {
+                        if (!workName.trim().equalsIgnoreCase("no")) {
+                            MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
+                            for (Result result : myPojo.getResult()) {
+                                resultList.addAll(Arrays.asList(result));
+                            }
+                            if (resultList != null && resultList.size() > 0) {
+                                for (Result result : resultList) {
+                                    dbHelper.upsertProductData(result);
+                                }
+                                sortProductData(resultList);
+                            }
+                        }
 
-                               sortProductData(resultList);
-                           }
-
-                       }
-
-                       else {
-                           Toasty.error(context, "No data found", Toast.LENGTH_SHORT).show();
-                       }
-
-                   }
-
-                   else {
-                       Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
-                   }
+                    } else {
+                        Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         } else {
@@ -249,25 +227,24 @@ public class ProductFragment extends Fragment {
     private void sortProductData(List<Result> resultList) {
         List<Result> newList = new ArrayList<Result>();
         for (Result c : resultList) {
-            if (!categoryDataExist(newList, c.getId().trim())) {
+            if (!categoryDataExist(newList, c.getQuestion())) {
                 newList.add(c);
             }
         }
-        queAnsAdapter = new QueAnsAdapter(context, newList, ProductFragment.this);
+        Collections.reverse(newList);
+        queAnsAdapter = new QueAnsAdapter(context, newList, ProductFragment.this, sub_category_id);
         reycycle_ques_ans.setLayoutManager(new LinearLayoutManager(context));
         reycycle_ques_ans.setAdapter(queAnsAdapter);
-            }
+    }
 
 
     private boolean categoryDataExist(List<Result> newList, String name) {
         for (Result c : newList) {
-            if (c.getId().trim().equalsIgnoreCase(name)) {
+            if (c.getQuestion().equalsIgnoreCase(name)) {
                 return true;
             }
         }
         return false;
     }
-
-
-        }
+}
 

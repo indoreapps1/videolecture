@@ -47,7 +47,7 @@ public class SubCategoryFragment extends Fragment {
     private static final String ARG_PARAM3 = "text";
 
     // TODO: Rename and change types of parameters
-    private String category_id;
+    private int category_id;
     private String category_image;
     private String category_text;
     // Required empty public constructor
@@ -66,10 +66,10 @@ public class SubCategoryFragment extends Fragment {
      * @return A new instance of fragment SubCategoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SubCategoryFragment newInstance(String id, String image, String text) {
+    public static SubCategoryFragment newInstance(int id, String image, String text) {
         SubCategoryFragment fragment = new SubCategoryFragment();
         Bundle args = new Bundle();
-        args.putString("category_id", id);
+        args.putInt("category_id", id);
         args.putString("category_image", image);
         args.putString("category_text", text);
         fragment.setArguments(args);
@@ -80,7 +80,7 @@ public class SubCategoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            category_id = getArguments().getString("category_id");
+            category_id = getArguments().getInt("category_id");
             category_image = getArguments().getString("category_image");
             category_text = getArguments().getString("category_text");
         }
