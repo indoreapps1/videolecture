@@ -2,10 +2,13 @@ package com.example.videolecture.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,10 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.videolecture.R;
+import com.example.videolecture.activity.LoginActivity;
+import com.example.videolecture.activity.MainActivity;
 import com.example.videolecture.adapter.QueAnsAdapter;
 import com.example.videolecture.adapter.SubCategoryAdapter;
 import com.example.videolecture.database.DbHelper;
@@ -25,6 +31,7 @@ import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
+import com.example.videolecture.utilities.ExpandableTextView;
 import com.example.videolecture.utilities.ReadMoreTextView;
 import com.example.videolecture.utilities.Utility;
 import com.google.gson.Gson;
@@ -72,7 +79,6 @@ public class ProductFragment extends Fragment {
     View view;
     //    ImageView  video;
     TextView text_view, txt_title, txt_time, txt_review;
-    ReadMoreTextView txt_description;
     List<Result> list;
     RecyclerView reycycle_ques_ans;
     int loginid;
@@ -83,6 +89,9 @@ public class ProductFragment extends Fragment {
     List<Result> resultList;
     QueAnsAdapter queAnsAdapter;
     DbHelper dbHelper;
+    ExpandableTextView txt_description;
+    RatingBar ratingbar;
+    float ratedValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +104,7 @@ public class ProductFragment extends Fragment {
         loginid = preferences.getInt("id", 0);
         dbHelper = new DbHelper(context);
         init();
+        manageRatingBar();
         uploadQues();
         showQuesAns();
         return view;
@@ -123,9 +133,10 @@ public class ProductFragment extends Fragment {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
                                 video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL, "Lk");
-                                txt_review.setText(result.getTotalRating() + "*");
+//                                txt_review.setText(result.getTotalRating() + "*");
                                 txt_title.setText(result.getTitle());
                                 txt_description.setText(result.getDescription());
+//                                makeTextViewResizable(DetailTv, 3, "See More", true);
                                 txt_time.setText(result.getTime());
                             }
 
@@ -246,5 +257,75 @@ public class ProductFragment extends Fragment {
         }
         return false;
     }
+
+    private void manageRatingBar(){
+        ratingbar=view.findViewById(R.id.rating);
+        ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                ratedValue=ratingbar.getRating();
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                final RatingBar rating_bar = new RatingBar(context);
+                rating_bar.setNumStars(5);
+                rating_bar.setMax(5);
+                rating_bar.setStepSize((float) 0.5);
+                rating_bar.setScaleX((float) 0.8);
+                rating_bar.setScaleY((float) 0.8);
+                dialog.setTitle("Rating");
+                dialog.setView(rating_bar);
+                dialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                txtView.setText(String.valueOf(rating.getProgress()));
+                        uploadRating();
+                        ratedValue=rating_bar.getRating();
+                        txt_review.setText(ratedValue+ "*");
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.create();
+                dialog.show();
+            }
+        });
+    }
+
+    private void uploadRating(){
+        if (Utility.isOnline(context)){
+            final ProgressDialog dialog = new ProgressDialog(context);
+            dialog.setMessage("Uploading your feedback...");
+            dialog.show();
+            ratedValue=ratingbar.getRating();
+            ServiceCaller serviceCaller = new ServiceCaller(context);
+            serviceCaller.callUploadRatingData(loginid, ratedValue, sub_category_id, new IAsyncWorkCompletedCallback() {
+                @Override
+                public void onDone(String workName, boolean isComplete) {
+                    dialog.dismiss();
+                    if (isComplete){
+                        if (!workName.equalsIgnoreCase("no")){
+                            Toast.makeText(context, "Your feedback send successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toasty.error(context, "Your feedback does not send", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    else {
+                        Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        else {
+            Toasty.info(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
 }
 

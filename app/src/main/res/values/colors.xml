@@ -6,4 +6,6 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
     <color name="colorPurple">#7C4DC1</color>
+    <color name="colorTextLight">#7C7C7C</color>
+    <color name="colorTextSky">#7C7C7C</color>
 </resources>

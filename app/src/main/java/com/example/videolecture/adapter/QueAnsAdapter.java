@@ -56,7 +56,7 @@ public class QueAnsAdapter extends RecyclerView.Adapter<QueAnsAdapter.MyViewHold
         DbHelper dbHelper=new DbHelper(context);
         List<Result> resultList1=dbHelper.GetAllQuesDataBasedOnQues(resultList.get(i).getQuestion());
         myViewHolder.item_txt_que.setText(resultList.get(i).getQuestion());
-        myViewHolder.item_txt_ques_time.setText(resultList1.get(i).getTime());
+//        myViewHolder.item_txt_ques_time.setText(resultList1.get(i).getTime());
         myViewHolder.recycle_inner_ans.setLayoutManager(new LinearLayoutManager(context));
         myViewHolder.recycle_inner_ans.setAdapter(new AnswerAdater(context, resultList1));
         SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);

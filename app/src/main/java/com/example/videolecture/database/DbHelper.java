@@ -155,7 +155,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Basket Order data by id
     public Result getProductData(int id) {
-        String query = "Select * FROM Video_Lec WHERE categId= " + id + "";
+        String query = "Select * FROM Video_Lec WHERE id= " + id + "";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Result data = new Result();

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.videolecture.R;
 import com.example.videolecture.activity.MainActivity;
@@ -61,6 +62,7 @@ public class ConditionsFragment extends Fragment {
 
     Context context;
     View view;
+    TextView terms;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +71,8 @@ public class ConditionsFragment extends Fragment {
         context=getActivity();
         view= inflater.inflate(R.layout.fragment_conditions, container, false);
 //        ((AppCompatActivity) context).getSupportActionBar().setTitle("Your Title");
+        terms=view.findViewById(R.id.terms);
+//        terms.setText(R.string.terms_condition+R.string.gmail);
         return view;
     }
 

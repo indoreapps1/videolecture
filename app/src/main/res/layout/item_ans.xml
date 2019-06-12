@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:layout_margin="@dimen/dim_value_5">
 
 
@@ -27,7 +29,7 @@
         android:layout_gravity="end"
         android:gravity="end"
         android:paddingRight="@dimen/dim_value_5"
-        android:textSize="12sp"/>
+        android:textSize="8sp"/>
 
     <!--<TextView-->
         <!--android:id="@+id/item_txt_ans"-->

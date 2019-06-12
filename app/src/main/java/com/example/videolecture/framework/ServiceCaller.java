@@ -242,4 +242,32 @@ public class ServiceCaller {
         AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
     }
 
+
+    //      call upload rating data
+    public void callUploadRatingData(final int loginId, final float rating, final String catId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
+        final String URL= Contants.BASE_URL+Contants.UploadRating;
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncWorkCompletedCallback.onDone(response, true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params=new HashMap<>();
+                params.put("loginId", String.valueOf(loginId));
+                params.put("rating", String.valueOf(rating));
+                params.put("productId", catId);
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
+    }
 }

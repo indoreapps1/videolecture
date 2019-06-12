@@ -1,16 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.PolicyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Policy"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"
+            android:layout_marginTop="@dimen/dim_value_10"
+            android:layout_gravity="top|center"
+            android:gravity="top|center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorBlack"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_1"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_1"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_2"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_2"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="@dimen/dim_value_5"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_3"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"
+            android:layout_marginBottom="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_3"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_4"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_4"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_5"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_5"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_6"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_6"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_7"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_7"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_8"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_8"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:text="@string/policy_heading_9"
+        android:textSize="16sp"
+        android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_9"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="@string/policy_heading_10"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:text="@string/policy_normal_10"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/gmail"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginRight="@dimen/dim_value_10"
+            android:layout_marginBottom="@dimen/dim_value_10"/>
+
+    </LinearLayout>
+
+
+
+</ScrollView>

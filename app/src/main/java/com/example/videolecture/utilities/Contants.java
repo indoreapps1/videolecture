@@ -43,7 +43,7 @@ public class Contants {
     public static final String otpverify = "otpverifiy.php";
     public static final String GetUserProfile = "Login/GetUserProfile";
     public static final String UpdateProfile = "Login/UpdateProfile";
-    public static final String AddNewAddress = "addNewAddress.php";
+    public static final String UploadRating = "uploadRating.php";
     public static final String UploadQuesAns = "uploadQuestionAns.php";
     public static final String GetQuesAns = "getQuestionAns.php";
     public static final String GetAllAddressById = "GetAllAddressById.php";
