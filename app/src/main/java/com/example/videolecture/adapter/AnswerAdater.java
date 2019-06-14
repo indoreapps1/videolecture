@@ -25,29 +25,34 @@ public class AnswerAdater extends RecyclerView.Adapter<AnswerAdater.MYViewHolder
     @NonNull
     @Override
     public AnswerAdater.MYViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view= LayoutInflater.from(context).inflate(R.layout.item_ans, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_ans, viewGroup, false);
         return new MYViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AnswerAdater.MYViewHolder myViewHolder, int i) {
-        myViewHolder.item_txt_ans.setText(resultList.get(i).getAnswer());
-        myViewHolder.item_txt_ans_time.setText(resultList.get(i).getTime());
+        if (resultList.get(i).getAnswer() != null && !resultList.get(i).getAnswer().equalsIgnoreCase("")) {
+            myViewHolder.item_txt_ans.setText("A." + (i) + " " + resultList.get(i).getAnswer());
+            myViewHolder.item_txt_ans_time.setText(resultList.get(i).getTime());
+        }else{
+            myViewHolder.item_txt_ans.setVisibility(View.GONE);
+            myViewHolder.item_txt_ans_time.setVisibility(View.GONE);
+        }
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return resultList.size();
 
     }
 
     public class MYViewHolder extends RecyclerView.ViewHolder {
         TextView item_txt_ans, item_txt_ans_time;
+
         public MYViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_txt_ans=itemView.findViewById(R.id.item_txt_ans);
-            item_txt_ans_time=itemView.findViewById(R.id.item_txt_ans_time);
+            item_txt_ans = itemView.findViewById(R.id.item_txt_ans);
+            item_txt_ans_time = itemView.findViewById(R.id.item_txt_ans_time);
         }
     }
 }

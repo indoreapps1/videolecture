@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -117,17 +119,17 @@ public class HomeFragment extends Fragment {
                             category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
                             category_recycle.setAdapter(categoryAdapter);
                         } else {
-                            Toast.makeText(context, "Any Category Not Found", Toast.LENGTH_SHORT).show();
+                            Toasty.error(context, "Any Category Not Found", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
 
                     }
 
                 }
             });
         } else {
-            Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            Toasty.info(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 }

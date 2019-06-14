@@ -132,18 +132,16 @@
             android:id="@+id/edt_ques"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dim_value_5"
-            android:layout_marginRight="@dimen/dim_value_5"
-            android:layout_marginBottom="@dimen/dim_value_5"
+            android:layout_margin="@dimen/dim_value_5"
             android:hint="Write your question here"
-            android:paddingLeft="@dimen/dim_value_5"
-            android:singleLine="true"
+            android:padding="@dimen/dim_value_5"
+            android:background="@drawable/round_red"
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_submit"
-            android:layout_width="@dimen/dim_value_80"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dim_value_40"
             android:layout_gravity="end"
             android:layout_marginLeft="@dimen/dim_value_5"
@@ -151,7 +149,7 @@
             android:layout_marginBottom="@dimen/dim_value_5"
             android:background="@drawable/login_btn_drawable"
             android:gravity="center"
-            android:text="Submit"
+            android:text="Upload Qus"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="14sp" />
@@ -160,7 +158,8 @@
             android:id="@+id/reycycle_ques_ans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_value_10"></android.support.v7.widget.RecyclerView>
+>
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

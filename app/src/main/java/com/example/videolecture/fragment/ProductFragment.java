@@ -1,5 +1,6 @@
 package com.example.videolecture.fragment;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,12 +43,12 @@ import java.util.Collections;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class ProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "id";
 
     // TODO: Rename and change types of parameters
     public String sub_category_id;
@@ -84,7 +85,7 @@ public class ProductFragment extends Fragment {
     int loginid;
     Button btn_submit;
     public EditText edt_ques;
-    String quesTxt;
+    String quesTxt,productId;
     JCVideoPlayerStandard video_player;
     List<Result> resultList;
     QueAnsAdapter queAnsAdapter;
@@ -99,26 +100,15 @@ public class ProductFragment extends Fragment {
         // Inflate the layout for this fragment
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_product, container, false);
-        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
-        SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
-        loginid = preferences.getInt("id", 0);
-        dbHelper = new DbHelper(context);
         init();
+        getProductData();
         manageRatingBar();
         uploadQues();
         showQuesAns();
         return view;
     }
 
-    private void init() {
-        text_view = view.findViewById(R.id.text_view);
-        video_player = view.findViewById(R.id.video_player);
-        txt_title = view.findViewById(R.id.txt_title);
-        txt_time = view.findViewById(R.id.txt_time);
-        txt_description = view.findViewById(R.id.txt_description);
-        txt_review = view.findViewById(R.id.txt_review);
-        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
-        list = new ArrayList<>();
+    private void getProductData() {
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Loading Data..");
@@ -132,7 +122,8 @@ public class ProductFragment extends Fragment {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
-                                video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL, "Lk");
+                                productId=result.getProductId();
+                                video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL);
 //                                txt_review.setText(result.getTotalRating() + "*");
                                 txt_title.setText(result.getTitle());
                                 txt_description.setText(result.getDescription());
@@ -151,10 +142,30 @@ public class ProductFragment extends Fragment {
             });
 
         } else {
-            Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            Toasty.info(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void init() {
+        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
+        SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        loginid = preferences.getInt("id", 0);
+        dbHelper = new DbHelper(context);
+        text_view = view.findViewById(R.id.text_view);
+        video_player = view.findViewById(R.id.video_player);
+        txt_title = view.findViewById(R.id.txt_title);
+        txt_time = view.findViewById(R.id.txt_time);
+        txt_description = view.findViewById(R.id.txt_description);
+        txt_review = view.findViewById(R.id.txt_review);
+        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
+        list = new ArrayList<>();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 
     private void uploadQues() {
         btn_submit = view.findViewById(R.id.btn_submit);
@@ -169,14 +180,14 @@ public class ProductFragment extends Fragment {
                         dialog.setMessage("Loading Data..");
                         dialog.show();
                         ServiceCaller serviceCaller = new ServiceCaller(context);
-                        serviceCaller.callUploadQuesData(loginid, quesTxt, sub_category_id, new IAsyncWorkCompletedCallback() {
+                        serviceCaller.callUploadQuesData(loginid, quesTxt, productId, new IAsyncWorkCompletedCallback() {
                             @Override
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();
                                 if (isComplete) {
                                     if (workName.trim().equalsIgnoreCase("success")) {
                                         showQuesAns();
-                                        Toast.makeText(context, "Your question uploaded successfull", Toast.LENGTH_SHORT).show();
+                                        Toasty.success(context, "Your question uploaded successfull", Toast.LENGTH_SHORT).show();
                                         edt_ques.setText("");
                                     } else {
                                         Toasty.error(context, "Your question does not upload", Toast.LENGTH_SHORT).show();
@@ -206,7 +217,7 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Fetching Data...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callShowQuesAnsData(loginid, sub_category_id, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callShowQuesAnsData(loginid, productId, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
@@ -243,7 +254,7 @@ public class ProductFragment extends Fragment {
             }
         }
         Collections.reverse(newList);
-        queAnsAdapter = new QueAnsAdapter(context, newList, ProductFragment.this, sub_category_id);
+        queAnsAdapter = new QueAnsAdapter(context, newList, ProductFragment.this, productId);
         reycycle_ques_ans.setLayoutManager(new LinearLayoutManager(context));
         reycycle_ques_ans.setAdapter(queAnsAdapter);
     }
@@ -258,69 +269,68 @@ public class ProductFragment extends Fragment {
         return false;
     }
 
-    private void manageRatingBar(){
-        ratingbar=view.findViewById(R.id.rating);
+    private void manageRatingBar() {
+        ratingbar = view.findViewById(R.id.rating);
         ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                ratedValue=ratingbar.getRating();
-                final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                final RatingBar rating_bar = new RatingBar(context);
-                rating_bar.setNumStars(5);
-                rating_bar.setMax(5);
-                rating_bar.setStepSize((float) 0.5);
-                rating_bar.setScaleX((float) 0.8);
-                rating_bar.setScaleY((float) 0.8);
-                dialog.setTitle("Rating");
-                dialog.setView(rating_bar);
-                dialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-//                txtView.setText(String.valueOf(rating.getProgress()));
-                        uploadRating();
-                        ratedValue=rating_bar.getRating();
-                        txt_review.setText(ratedValue+ "*");
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom_rating_dialog);
+                final RatingBar ratingBarii = dialog.findViewById(R.id.ratingBar);
+                Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                Button btn_submit = dialog.findViewById(R.id.btn_submit);
+                dialog.show();
+                ratingBarii.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        ratedValue = ratingBar.getRating();
+
+                    }
+                });
+                btn_submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (ratedValue != 0) {
+                            uploadRating();
+                            dialog.dismiss();
+                        } else {
+                            Toasty.info(context, "Select Feedback").show();
+                        }
+                    }
+                });
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.create();
-                dialog.show();
+
             }
         });
     }
 
-    private void uploadRating(){
-        if (Utility.isOnline(context)){
+    private void uploadRating() {
+        if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Uploading your feedback...");
             dialog.show();
-            ratedValue=ratingbar.getRating();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callUploadRatingData(loginid, ratedValue, sub_category_id, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callUploadRatingData(loginid, ratedValue, productId, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
-                    if (isComplete){
-                        if (!workName.equalsIgnoreCase("no")){
-                            Toast.makeText(context, "Your feedback send successfully", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                    if (isComplete) {
+                        if (!workName.equalsIgnoreCase("no")) {
+                            Toasty.success(context, "Your feedback send successfully", Toast.LENGTH_SHORT).show();
+                        } else {
                             Toasty.error(context, "Your feedback does not send", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    else {
+                    } else {
                         Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-        }
-
-        else {
+        } else {
             Toasty.info(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
 
         }

@@ -205,24 +205,24 @@ public class DbHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    // get Basket OrderData
-//    public Result getProductData(String id) {
-//
-//        String query = "Select * FROM Video_Lec";
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery(query, null);
-//        Result data = new Result();
-//
-//        if (cursor.moveToFirst()) {
-//            cursor.moveToFirst();
-//            populateProductData(cursor, data);
-//
-//            cursor.close();
-//        } else {
-//            data = null;
-//        }
-//        db.close();
-//        return data;
-//    }
+    public Result getProductData(String ques) {
+
+        String query = "Select * FROM Video_Lec WHERE question= '" + ques + "'";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Result data = new Result();
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            populateProductData(cursor, data);
+
+            cursor.close();
+        } else {
+            data = null;
+        }
+        db.close();
+        return data;
+    }
 }

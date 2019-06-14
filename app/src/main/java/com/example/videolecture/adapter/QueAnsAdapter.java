@@ -35,13 +35,13 @@ public class QueAnsAdapter extends RecyclerView.Adapter<QueAnsAdapter.MyViewHold
     Context context;
     List<Result> resultList;
     ProductFragment productFragment;
-    String sub_category_id;
+    String productId;
 
-    public QueAnsAdapter(Context context, List<Result> resultList, ProductFragment productFragment, String sub_category_id) {
+    public QueAnsAdapter(Context context, List<Result> resultList, ProductFragment productFragment, String productId) {
         this.context = context;
         this.resultList = resultList;
         this.productFragment = productFragment;
-        this.sub_category_id = sub_category_id;
+        this.productId = productId;
     }
 
     @NonNull
@@ -53,12 +53,16 @@ public class QueAnsAdapter extends RecyclerView.Adapter<QueAnsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
-        DbHelper dbHelper=new DbHelper(context);
-        List<Result> resultList1=dbHelper.GetAllQuesDataBasedOnQues(resultList.get(i).getQuestion());
-        myViewHolder.item_txt_que.setText(resultList.get(i).getQuestion());
-//        myViewHolder.item_txt_ques_time.setText(resultList1.get(i).getTime());
+        DbHelper dbHelper = new DbHelper(context);
+        List<Result> resultList1 = dbHelper.GetAllQuesDataBasedOnQues(resultList.get(i).getQuestion());
+        Result result = dbHelper.getProductData(resultList.get(i).getQuestion());
+        int p = i;
+        myViewHolder.item_txt_que.setText("Q." + (p + 1) + " " + resultList.get(i).getQuestion());
+        myViewHolder.item_txt_ques_time.setText(result.getTime());
         myViewHolder.recycle_inner_ans.setLayoutManager(new LinearLayoutManager(context));
-        myViewHolder.recycle_inner_ans.setAdapter(new AnswerAdater(context, resultList1));
+        if (resultList1 != null && resultList1.size() != 0) {
+            myViewHolder.recycle_inner_ans.setAdapter(new AnswerAdater(context, resultList1));
+        }
         SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         final int loginid = preferences.getInt("id", 0);
         myViewHolder.item_btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +75,7 @@ public class QueAnsAdapter extends RecyclerView.Adapter<QueAnsAdapter.MyViewHold
                         dialog.setMessage("Loading Data..");
                         dialog.show();
                         ServiceCaller serviceCaller = new ServiceCaller(context);
-                        serviceCaller.callUploadQuesAnsData(loginid, resultList.get(i).getQuestion(), sub_category_id, ansText, new IAsyncWorkCompletedCallback() {
+                        serviceCaller.callUploadQuesAnsData(loginid, resultList.get(i).getQuestion(), productId, ansText, new IAsyncWorkCompletedCallback() {
                             @Override
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();

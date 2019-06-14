@@ -157,7 +157,7 @@ public class ServiceCaller {
 
 
 //    call upload ques data
-    public void callUploadQuesData(final int loginId, final String ques, final String catId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
+    public void callUploadQuesData(final int loginId, final String ques, final String productId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
         final String URL= Contants.BASE_URL+Contants.UploadQuesAns;
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -175,7 +175,7 @@ public class ServiceCaller {
                 Map<String, String> params=new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("question", ques);
-                params.put("productId", catId);
+                params.put("productId", productId);
                 params.put("answer", "");
                 return params;
             }
@@ -186,7 +186,7 @@ public class ServiceCaller {
     }
 
 //      call show ques ans data
-    public void callShowQuesAnsData(final int loginId, final String catId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
+    public void callShowQuesAnsData(final int loginId, final String productId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
         final String URL= Contants.BASE_URL+Contants.GetQuesAns;
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -203,7 +203,7 @@ public class ServiceCaller {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params=new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
-                params.put("productId", catId);
+                params.put("productId", productId);
                 return params;
             }
         };
@@ -214,7 +214,7 @@ public class ServiceCaller {
 
 
 //      call upload ques ans data
-    public void callUploadQuesAnsData(final int loginId, final String ques, final String catId, final String ans,final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
+    public void callUploadQuesAnsData(final int loginId, final String ques, final String productId, final String ans,final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
         final String URL= Contants.BASE_URL+Contants.UploadQuesAns;
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -232,7 +232,7 @@ public class ServiceCaller {
                 Map<String, String> params=new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("question", ques);
-                params.put("productId", catId);
+                params.put("productId", productId);
                 params.put("answer", ans);
                 return params;
             }
@@ -244,7 +244,7 @@ public class ServiceCaller {
 
 
     //      call upload rating data
-    public void callUploadRatingData(final int loginId, final float rating, final String catId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
+    public void callUploadRatingData(final int loginId, final float rating, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
         final String URL= Contants.BASE_URL+Contants.UploadRating;
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -262,7 +262,7 @@ public class ServiceCaller {
                 Map<String, String> params=new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("rating", String.valueOf(rating));
-                params.put("productId", catId);
+                params.put("productId", productId);
                 return params;
             }
         };
