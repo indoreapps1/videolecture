@@ -1,12 +1,15 @@
 package com.example.videolecture.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +42,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder myViewHolder, final int i) {
-        Glide.with(context).load(resultList.get(i).getImage()).into(myViewHolder.item_category_img);
+        byte[] decodedString = Base64.decode(resultList.get(i).getImage(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (resultList.get(i).getImage().equalsIgnoreCase("")) {
+            Glide.with(context).load(R.drawable.demo_logo).into(myViewHolder.item_category_img);
+        } else {
+            Glide.with(context).load(decodedByte).into(myViewHolder.item_category_img);
+        }
         myViewHolder.item_category_txt.setText(resultList.get(i).getCategoryName());
         myViewHolder.item_category_card.setOnClickListener(new View.OnClickListener() {
             @Override
