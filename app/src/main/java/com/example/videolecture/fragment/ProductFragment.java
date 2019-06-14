@@ -85,7 +85,7 @@ public class ProductFragment extends Fragment {
     int loginid;
     Button btn_submit;
     public EditText edt_ques;
-    String quesTxt,productId;
+    String quesTxt, productId, currentRating;
     JCVideoPlayerStandard video_player;
     List<Result> resultList;
     QueAnsAdapter queAnsAdapter;
@@ -102,7 +102,6 @@ public class ProductFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_product, container, false);
         init();
         getProductData();
-        manageRatingBar();
         uploadQues();
         showQuesAns();
         return view;
@@ -122,13 +121,19 @@ public class ProductFragment extends Fragment {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
-                                productId=result.getProductId();
+                                productId = result.getProductId();
+                                currentRating = result.getCurrentRating();
                                 video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL);
-//                                txt_review.setText(result.getTotalRating() + "*");
+                                if (result.getTotalRating() != null) {
+                                    txt_review.setText(result.getTotalRating() + "*");
+                                } else {
+                                    txt_review.setText(0 + "*");
+                                }
                                 txt_title.setText(result.getTitle());
                                 txt_description.setText(result.getDescription());
 //                                makeTextViewResizable(DetailTv, 3, "See More", true);
                                 txt_time.setText(result.getTime());
+                                manageRatingBar();
                             }
 
                         } else {
@@ -217,7 +222,7 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Fetching Data...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callShowQuesAnsData(loginid, productId, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callShowQuesAnsData(loginid, sub_category_id, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
@@ -236,7 +241,7 @@ public class ProductFragment extends Fragment {
                         }
 
                     } else {
-                        Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toasty.error(context, "Something went wrong In Getting Qus Ans", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -271,42 +276,49 @@ public class ProductFragment extends Fragment {
 
     private void manageRatingBar() {
         ratingbar = view.findViewById(R.id.rating);
-        ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.custom_rating_dialog);
-                final RatingBar ratingBarii = dialog.findViewById(R.id.ratingBar);
-                Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
-                Button btn_submit = dialog.findViewById(R.id.btn_submit);
-                dialog.show();
-                ratingBarii.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                        ratedValue = ratingBar.getRating();
+        if (currentRating != null && !currentRating.equalsIgnoreCase("")) {
+            ratingbar.setRating(Float.parseFloat(currentRating));
+            ratingbar.setClickable(false);
+            ratingbar.setSelected(false);
+            ratingbar.setIsIndicator(true);
+        } else {
+            ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.custom_rating_dialog);
+                    final RatingBar ratingBarii = dialog.findViewById(R.id.ratingBar);
+                    Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                    Button btn_submit = dialog.findViewById(R.id.btn_submit);
+                    dialog.show();
+                    ratingBarii.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                        @Override
+                        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                            ratedValue = ratingBar.getRating();
 
-                    }
-                });
-                btn_submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ratedValue != 0) {
-                            uploadRating();
-                            dialog.dismiss();
-                        } else {
-                            Toasty.info(context, "Select Feedback").show();
                         }
-                    }
-                });
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                    });
+                    btn_submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ratedValue != 0) {
+                                uploadRating();
+                                dialog.dismiss();
+                            } else {
+                                Toasty.info(context, "Select Feedback").show();
+                            }
+                        }
+                    });
+                    btn_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
-            }
-        });
+                }
+            });
+        }
     }
 
     private void uploadRating() {
@@ -315,13 +327,14 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Uploading your feedback...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callUploadRatingData(loginid, ratedValue, productId, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callUploadRatingData(loginid, ratedValue, sub_category_id, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
                     if (isComplete) {
                         if (!workName.equalsIgnoreCase("no")) {
                             Toasty.success(context, "Your feedback send successfully", Toast.LENGTH_SHORT).show();
+                            getProductData();
                         } else {
                             Toasty.error(context, "Your feedback does not send", Toast.LENGTH_SHORT).show();
                         }

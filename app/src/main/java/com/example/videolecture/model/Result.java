@@ -21,6 +21,7 @@ public class Result {
     private String categoryId;
 
     private String totalRating;
+    private String currentRating;
 
     private String productId;
 
@@ -40,6 +41,14 @@ public class Result {
 
     public void setTotalRating(String totalRating) {
         this.totalRating = totalRating;
+    }
+
+    public String getCurrentRating() {
+        return currentRating;
+    }
+
+    public void setCurrentRating(String currentRating) {
+        this.currentRating = currentRating;
     }
 
     public String getSubcategoryId() {
