@@ -162,7 +162,6 @@ public class ProductFragment extends Fragment {
         txt_time = view.findViewById(R.id.txt_time);
         txt_description = view.findViewById(R.id.txt_description);
         txt_review = view.findViewById(R.id.txt_review);
-        reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
         list = new ArrayList<>();
     }
 
