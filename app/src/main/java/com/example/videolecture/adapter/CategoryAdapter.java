@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         byte[] decodedString = Base64.decode(resultList.get(i).getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         if (resultList.get(i).getImage().equalsIgnoreCase("")) {
-            Glide.with(context).load(R.drawable.demo_logo).into(myViewHolder.item_category_img);
+            Glide.with(context).load(R.drawable.logo).into(myViewHolder.item_category_img);
         } else {
             Glide.with(context).load(decodedByte).into(myViewHolder.item_category_img);
         }

@@ -14,7 +14,7 @@
         android:layout_height="@dimen/dim_value_150"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/demo_logo"/>
+        android:src="@drawable/logo"/>
 
     <LinearLayout
         android:id="@+id/layout"

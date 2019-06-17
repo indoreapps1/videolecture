@@ -103,7 +103,7 @@ public class SubCategoryFragment extends Fragment {
         recycle_sub_category = view.findViewById(R.id.recycle_sub_category);
         image_view = view.findViewById(R.id.image_view);
         text_view = view.findViewById(R.id.text_view);
-        Glide.with(context).load(category_image).placeholder(R.drawable.demo_logo).into(image_view);
+        Glide.with(context).load(category_image).placeholder(R.drawable.logo).into(image_view);
         text_view.setText(category_text);
         setSubCategory();
         return view;

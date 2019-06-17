@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Loading Data Wait..");
             dialog.show();
+            dialog.setCancelable(false);
             ServiceCaller serviceCaller = new ServiceCaller(context);
             serviceCaller.callCategoryData(new IAsyncWorkCompletedCallback() {
                 @Override

@@ -14,7 +14,6 @@ public class Result {
 
     private String status;
 
-    private String subcategoryId;
 
     private String title;
 
@@ -49,14 +48,6 @@ public class Result {
 
     public void setCurrentRating(String currentRating) {
         this.currentRating = currentRating;
-    }
-
-    public String getSubcategoryId() {
-        return subcategoryId;
-    }
-
-    public void setSubcategoryId(String subcategoryId) {
-        this.subcategoryId = subcategoryId;
     }
 
     public String getTitle() {

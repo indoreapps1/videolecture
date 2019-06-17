@@ -51,7 +51,7 @@ public class ProductFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     // TODO: Rename and change types of parameters
-    public String sub_category_id;
+    public String productId;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -61,7 +61,7 @@ public class ProductFragment extends Fragment {
     public static ProductFragment newInstance(String id) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
-        args.putString("sub_category_id", id);
+        args.putString("productId", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,7 +70,7 @@ public class ProductFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            sub_category_id = getArguments().getString("sub_category_id");
+            productId = getArguments().getString("productId");
 //            Category_name = getArguments().getString("Category_name");
 //            Category_image = getArguments().getString("Category_image");
         }
@@ -85,7 +85,7 @@ public class ProductFragment extends Fragment {
     int loginid;
     Button btn_submit;
     public EditText edt_ques;
-    String quesTxt, productId, currentRating;
+    String quesTxt, currentRating;
     JCVideoPlayerStandard video_player;
     List<Result> resultList;
     QueAnsAdapter queAnsAdapter;
@@ -113,7 +113,7 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Loading Data..");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callAllProductData(sub_category_id, loginid, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callAllProductData(productId, loginid, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
@@ -221,7 +221,7 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Fetching Data...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callShowQuesAnsData(loginid, sub_category_id, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callShowQuesAnsData(loginid, productId, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
@@ -326,7 +326,7 @@ public class ProductFragment extends Fragment {
             dialog.setMessage("Uploading your feedback...");
             dialog.show();
             ServiceCaller serviceCaller = new ServiceCaller(context);
-            serviceCaller.callUploadRatingData(loginid, ratedValue, sub_category_id, new IAsyncWorkCompletedCallback() {
+            serviceCaller.callUploadRatingData(loginid, ratedValue, productId, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();

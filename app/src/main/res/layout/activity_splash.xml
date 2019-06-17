@@ -14,14 +14,14 @@
     <ImageView
     android:id="@+id/img_splash"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dim_value_150"
+    android:layout_height="@dimen/dim_value_250"
     android:layout_gravity="center"
     android:scaleType="centerCrop"
-    android:src="@drawable/demo_logo" />
+    android:src="@drawable/logo" />
     <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Welcome"
+    android:text="Welcome\n Fans of Mufti Akmal Sahab"
     android:textColor="@color/colorPrimaryDark"
     android:textStyle="bold"
     android:textSize="30sp"
