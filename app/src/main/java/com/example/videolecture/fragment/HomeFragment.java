@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.asura.library.posters.Poster;
+import com.asura.library.posters.RemoteImage;
 import com.asura.library.posters.RemoteVideo;
 import com.asura.library.views.PosterSlider;
 import com.example.videolecture.R;
@@ -114,10 +115,12 @@ public class HomeFragment extends Fragment {
                 if (isComplete) {
                     MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                     for (Result result : myPojo.getResult()) {
-                        posters.add(new RemoteVideo(Uri.parse(result.getVideo())));
+                        posters.add(new RemoteImage(result.getVideo()));
                     }
                     if (arrayList != null) {
                         posterSlider.setPosters(posters);
+//                        posterSlider.onVideoStarted();
+//                        posterSlider.onVideoStopped();
                     }
                 }
             }
