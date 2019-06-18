@@ -70,7 +70,7 @@
                 </RelativeLayout>
 
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -82,24 +82,33 @@
                         android:id="@+id/rating"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dim_value_40"
-                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:numStars="5"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:stepSize="0.5" />
+                        android:numStars="5" />
 
                     <TextView
                         android:id="@+id/txt_review"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/dim_value_40"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/dim_value_5"
+                        android:layout_weight=".15"
                         android:gravity="center"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp" />
 
-                </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_share"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dim_value_40"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dim_value_5"
+                        android:layout_weight=".15"
+                        android:background="@drawable/ic_share_black_24dp"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
 
                 <!--<com.example.videolecture.utilities.ReadMoreTextView-->
@@ -133,9 +142,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dim_value_5"
+            android:background="@drawable/round_red"
             android:hint="Write your question here"
             android:padding="@dimen/dim_value_5"
-            android:background="@drawable/round_red"
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
@@ -157,9 +166,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reycycle_ques_ans"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
->
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

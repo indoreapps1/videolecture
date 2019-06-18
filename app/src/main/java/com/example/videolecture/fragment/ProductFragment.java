@@ -79,13 +79,13 @@ public class ProductFragment extends Fragment {
     Context context;
     View view;
     //    ImageView  video;
-    TextView text_view, txt_title, txt_time, txt_review;
+    TextView text_view, txt_title, txt_time, txt_review, tv_share;
     List<Result> list;
     RecyclerView reycycle_ques_ans;
     int loginid;
     Button btn_submit;
     public EditText edt_ques;
-    String quesTxt, currentRating;
+    String quesTxt, currentRating, url, title, description;
     JCVideoPlayerStandard video_player;
     List<Result> resultList;
     QueAnsAdapter queAnsAdapter;
@@ -121,19 +121,24 @@ public class ProductFragment extends Fragment {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
-                                productId = result.getProductId();
-                                currentRating = result.getCurrentRating();
-                                video_player.setUp(result.getVideo(), video_player.SCREEN_LAYOUT_NORMAL);
-                                if (result.getTotalRating() != null) {
-                                    txt_review.setText(result.getTotalRating() + "*");
-                                } else {
-                                    txt_review.setText(0 + "*");
-                                }
-                                txt_title.setText(result.getTitle());
-                                txt_description.setText(result.getDescription());
+                                if (result != null) {
+                                    productId = result.getProductId();
+                                    currentRating = result.getCurrentRating();
+                                    url = result.getVideo();
+                                    title = result.getTitle();
+                                    description = result.getDescription();
+                                    video_player.setUp(url, video_player.SCREEN_LAYOUT_NORMAL);
+                                    if (result.getTotalRating() != null) {
+                                        txt_review.setText(result.getTotalRating() + "*");
+                                    } else {
+                                        txt_review.setText(0 + "*");
+                                    }
+                                    txt_title.setText(title);
+                                    txt_description.setText(description);
 //                                makeTextViewResizable(DetailTv, 3, "See More", true);
-                                txt_time.setText(result.getTime());
-                                manageRatingBar();
+                                    txt_time.setText(result.getTime());
+                                    manageRatingBar();
+                                }
                             }
 
                         } else {
@@ -162,7 +167,18 @@ public class ProductFragment extends Fragment {
         txt_time = view.findViewById(R.id.txt_time);
         txt_description = view.findViewById(R.id.txt_description);
         txt_review = view.findViewById(R.id.txt_review);
+        tv_share = view.findViewById(R.id.tv_share);
         list = new ArrayList<>();
+        String link="https://play.google.com/store/apps/details?id=com.videolecture";
+        tv_share.setOnClickListener(v -> {
+            if (url != null && title != null && description != null) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, url + "\n" + title + "\n" + description+"\n"+"Download This App click this link "+link);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
     }
 
     @Override

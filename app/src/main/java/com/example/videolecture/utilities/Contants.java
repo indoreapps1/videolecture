@@ -51,6 +51,7 @@ public class Contants {
     public static final String GET_ALL_LOCALITIES_URL = "Localities/GetAllLocalities";
     public static final String DeleteAddress = "DeleteAddress.php";
     public static final String GetCategory = "getCategory.php";
+    public static final String getPagerData = "getPagerData.php";
     public static final String GetSubCategory = "getSubCategory.php";
     public static final String GetAllBestSell = "GetAllBestSell.php";
     public static final String GetAllNewArrive = "GetAllNewArrive.php";

@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.videolecture.R;
 import com.example.videolecture.fragment.ProductFragment;
 import com.example.videolecture.fragment.SubCategoryFragment;
 import com.example.videolecture.model.Result;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
@@ -47,7 +49,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         if (resultList.get(i).getImage().equalsIgnoreCase("")) {
             Glide.with(context).load(R.drawable.logo).into(myViewHolder.item_category_img);
         } else {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            Glide.with(context)
+//                    .load(stream.toByteArray())
+//                    .asBitmap()
+//                    .into(myViewHolder.item_category_img);
             Glide.with(context).load(decodedByte).into(myViewHolder.item_category_img);
+//            Glide.with(context).load(decodedByte).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(myViewHolder.item_category_img);
+//            Glide.with(context).load(decodedByte).crossFade().fitCenter().into(myViewHolder.item_category_img);
         }
         myViewHolder.item_category_txt.setText(resultList.get(i).getCategoryName());
         myViewHolder.item_category_card.setOnClickListener(new View.OnClickListener() {

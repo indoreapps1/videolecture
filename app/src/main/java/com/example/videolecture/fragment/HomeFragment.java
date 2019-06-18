@@ -17,6 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.asura.library.posters.Poster;
+import com.asura.library.posters.RemoteVideo;
+import com.asura.library.views.PosterSlider;
 import com.example.videolecture.R;
 import com.example.videolecture.adapter.CategoryAdapter;
 import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
@@ -86,6 +89,8 @@ public class HomeFragment extends Fragment {
     RecyclerView category_recycle;
     CategoryAdapter categoryAdapter;
     private List<Result> arrayList;
+    List<Poster> posters;
+    PosterSlider posterSlider;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,8 +99,29 @@ public class HomeFragment extends Fragment {
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_home, container, false);
         category_recycle = view.findViewById(R.id.category_recycle);
+        posterSlider = view.findViewById(R.id.poster_slider);
         setCategoryApi();
+        getPagerData();
         return view;
+    }
+
+    private void getPagerData() {
+        posters = new ArrayList<>();
+        ServiceCaller serviceCaller = new ServiceCaller(context);
+        serviceCaller.callPagerData(new IAsyncWorkCompletedCallback() {
+            @Override
+            public void onDone(String workName, boolean isComplete) {
+                if (isComplete) {
+                    MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
+                    for (Result result : myPojo.getResult()) {
+                        posters.add(new RemoteVideo(Uri.parse(result.getVideo())));
+                    }
+                    if (arrayList != null) {
+                        posterSlider.setPosters(posters);
+                    }
+                }
+            }
+        });
     }
 
     private void setCategoryApi() {
