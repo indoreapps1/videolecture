@@ -35,6 +35,8 @@ import com.example.videolecture.model.Result;
 import com.example.videolecture.utilities.ExpandableTextView;
 import com.example.videolecture.utilities.ReadMoreTextView;
 import com.example.videolecture.utilities.Utility;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -93,6 +95,8 @@ public class ProductFragment extends Fragment {
     ExpandableTextView txt_description;
     RatingBar ratingbar;
     float ratedValue;
+    private AdView adView;
+    AdRequest adRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +110,27 @@ public class ProductFragment extends Fragment {
         showQuesAns();
         return view;
     }
+    @Override
+    public void onPause() {
 
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
     private void getProductData() {
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
@@ -157,6 +181,9 @@ public class ProductFragment extends Fragment {
     }
 
     private void init() {
+        adView = (AdView) view.findViewById(R.id.ad_view);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
         SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         loginid = preferences.getInt("id", 0);
@@ -169,23 +196,19 @@ public class ProductFragment extends Fragment {
         txt_review = view.findViewById(R.id.txt_review);
         tv_share = view.findViewById(R.id.tv_share);
         list = new ArrayList<>();
-        String link="https://play.google.com/store/apps/details?id=com.videolecture";
+        String link = "https://play.google.com/store/apps/details?id=com.videolecture";
         tv_share.setOnClickListener(v -> {
             if (url != null && title != null && description != null) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, url + "\n" + title + "\n" + description+"\n"+"Download This App click this link "+link);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, url + "\n" + title + "\n" + description + "\n" + "Download This App click this link " + link);
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
             }
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
+
 
     private void uploadQues() {
         btn_submit = view.findViewById(R.id.btn_submit);

@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,17 +25,23 @@ import com.asura.library.posters.RemoteVideo;
 import com.asura.library.views.PosterSlider;
 import com.example.videolecture.R;
 import com.example.videolecture.adapter.CategoryAdapter;
+import com.example.videolecture.adapter.SlidingImage_Adapter;
 import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
 import com.example.videolecture.utilities.Utility;
+import com.example.videolecture.viewpagerindicator.CirclePageIndicator;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 
 import java.lang.ref.ReferenceQueue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
 
@@ -90,8 +98,13 @@ public class HomeFragment extends Fragment {
     RecyclerView category_recycle;
     CategoryAdapter categoryAdapter;
     private List<Result> arrayList;
-    List<Poster> posters;
-    PosterSlider posterSlider;
+    CirclePageIndicator circlePageIndicator;
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+    private ArrayList<String> ImagesArray;
+    private AdView adView,adView2;
+    AdRequest adRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,14 +113,50 @@ public class HomeFragment extends Fragment {
         context = getActivity();
         view = inflater.inflate(R.layout.fragment_home, container, false);
         category_recycle = view.findViewById(R.id.category_recycle);
-        posterSlider = view.findViewById(R.id.poster_slider);
+        adView = (AdView) view.findViewById(R.id.ad_view);
+        adView2 = (AdView) view.findViewById(R.id.ad_view2);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        adView2.loadAd(adRequest);
         setCategoryApi();
         getPagerData();
         return view;
     }
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
 
+        if (adView2 != null) {
+            adView2.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+        if (adView2 != null) {
+            adView2.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        if (adView2 != null) {
+            adView2.destroy();
+        }
+        super.onDestroy();
+    }
     private void getPagerData() {
-        posters = new ArrayList<>();
+        ImagesArray = new ArrayList<>();
         ServiceCaller serviceCaller = new ServiceCaller(context);
         serviceCaller.callPagerData(new IAsyncWorkCompletedCallback() {
             @Override
@@ -115,14 +164,69 @@ public class HomeFragment extends Fragment {
                 if (isComplete) {
                     MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                     for (Result result : myPojo.getResult()) {
-                        posters.add(new RemoteImage(result.getVideo()));
+                        ImagesArray.addAll(Arrays.asList(result.getVideo()));
                     }
                     if (arrayList != null) {
-                        posterSlider.setPosters(posters);
+                        viewPagerSetUp();
+//                        posterSlider.setPosters(posters);
 //                        posterSlider.onVideoStarted();
 //                        posterSlider.onVideoStopped();
                     }
                 }
+            }
+        });
+    }
+
+    private void viewPagerSetUp() {
+        //------viwepagerss settings...........
+        mPager = (ViewPager) view.findViewById(R.id.pager);
+        circlePageIndicator = view.findViewById(R.id.indicator);
+        NUM_PAGES = ImagesArray.size();
+        if (ImagesArray != null && ImagesArray.size() > 0) {
+            mPager.setAdapter(new SlidingImage_Adapter(context, ImagesArray));
+            circlePageIndicator.setViewPager(mPager);
+        }
+        final float density = context.getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        circlePageIndicator.setRadius(5 * density);
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new
+
+                                    TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            handler.post(Update);
+                                        }
+                                    }, 3000, 3000);
+
+        // Pager listener over indicator
+        circlePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
             }
         });
     }

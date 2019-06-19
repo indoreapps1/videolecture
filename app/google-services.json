@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "853819208245",
+    "firebase_url": "https://videolecture-7e8b9.firebaseio.com",
+    "project_id": "videolecture-7e8b9",
+    "storage_bucket": "videolecture-7e8b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853819208245:android:6ff3d6d7f109a0f6",
+        "android_client_info": {
+          "package_name": "com.videolecture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853819208245-cbs06e24undpkldid9283a3ungkvdc1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt-ob9fS6jF_dhspl4EWJXvSznb9AUzp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853819208245-cbs06e24undpkldid9283a3ungkvdc1e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

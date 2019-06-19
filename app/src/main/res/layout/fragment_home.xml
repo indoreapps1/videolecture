@@ -1,41 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".fragment.HomeFragment">
 
-    <com.asura.library.views.PosterSlider
-        android:id="@+id/poster_slider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:defaultIndicator="circle"
-        app:hideIndicators="true"
-        android:layout_margin="@dimen/dim_value_5"
-        app:imageSlideInterval="5000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:loopSlides="true" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/dim_value_10"
-        android:layout_marginTop="@dimen/dim_value_10"
-        android:gravity="center|left"
-        android:text="Select Category"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/category_recycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never">
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            app:adSize="BANNER"
+            app:adUnitId="@string/banner_ad_unit_id" />
+        <!--view pager -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_value_200">
 
-    </android.support.v7.widget.RecyclerView>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true" />
 
-</LinearLayout>
+            <com.example.videolecture.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="bottom"
+                android:padding="10dip"
+                app:centered="true"
+                app:fillColor="#ff0099"
+                app:pageColor="#FF0000"
+                app:snap="false" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dim_value_10"
+            android:layout_marginTop="@dimen/dim_value_10"
+            android:gravity="center|left"
+            android:text="Select Category"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/category_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ad_view2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:adSize="BANNER"
+            app:adUnitId="@string/banner_ad_unit_id" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

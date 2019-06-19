@@ -1,13 +1,19 @@
 package com.example.videolecture.activity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
@@ -19,11 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.videolecture.R;
+import com.example.videolecture.firebase.Config;
+import com.example.videolecture.firebase.NotificationUtils;
 import com.example.videolecture.fragment.AboutUsFragment;
 import com.example.videolecture.fragment.ConditionsFragment;
 import com.example.videolecture.fragment.HomeFragment;
 import com.example.videolecture.fragment.PolicyFragment;
 import com.example.videolecture.fragment.ProductFragment;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -58,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +103,40 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //        ProductFragment productFragment=ProductFragment.newInstance(0,"","");
 //        openFragment(productFragment);
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+                    Intent intents = new Intent(MainActivity.this, MainActivity.class);
+                    intents.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 1410,
+                            intents, PendingIntent.FLAG_ONE_SHOT);
+                    String message = intent.getStringExtra("message");
+                    NotificationCompat.Builder notificationBuilder = new
+                            NotificationCompat.Builder(MainActivity.this)
+                            .setSmallIcon(R.drawable.logo)
+                            .setContentTitle("Message")
+                            .setContentText(message)
+                            .setAutoCancel(true)
+                            .setContentIntent(pendingIntent);
+
+                    NotificationManager notificationManager =
+                            (NotificationManager)
+                                    getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    notificationManager.notify(1410, notificationBuilder.build());
+//                    Toast.makeText(getApplicationContext(), "Notification: " + message, Toast.LENGTH_LONG).show();
+
+                }
+            }
+        };
     }
 
     @Override
@@ -103,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
-    public void showAlert(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    public void showAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Logout");
         builder.setMessage("Do you want to exit");
