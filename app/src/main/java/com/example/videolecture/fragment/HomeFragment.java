@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private ArrayList<String> ImagesArray;
-    private AdView adView,adView2;
+    private AdView adView, adView2;
     AdRequest adRequest;
 
     @Override
@@ -122,6 +122,7 @@ public class HomeFragment extends Fragment {
         getPagerData();
         return view;
     }
+
     @Override
     public void onPause() {
         if (adView != null) {
@@ -155,22 +156,28 @@ public class HomeFragment extends Fragment {
         }
         super.onDestroy();
     }
+
     private void getPagerData() {
         ImagesArray = new ArrayList<>();
         ServiceCaller serviceCaller = new ServiceCaller(context);
         serviceCaller.callPagerData(new IAsyncWorkCompletedCallback() {
             @Override
             public void onDone(String workName, boolean isComplete) {
+
                 if (isComplete) {
-                    MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
-                    for (Result result : myPojo.getResult()) {
-                        ImagesArray.addAll(Arrays.asList(result.getVideo()));
-                    }
-                    if (arrayList != null) {
-                        viewPagerSetUp();
+                    if (workName.trim().equalsIgnoreCase("no")) {
+                        Toasty.error(context, "No Data Found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
+                        for (Result result : myPojo.getResult()) {
+                            ImagesArray.addAll(Arrays.asList(result.getVideo()));
+                        }
+                        if (arrayList != null) {
+                            viewPagerSetUp();
 //                        posterSlider.setPosters(posters);
 //                        posterSlider.onVideoStarted();
 //                        posterSlider.onVideoStopped();
+                        }
                     }
                 }
             }
@@ -244,16 +251,20 @@ public class HomeFragment extends Fragment {
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
                     if (isComplete) {
-                        MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
-                        for (Result result : myPojo.getResult()) {
-                            arrayList.addAll(Arrays.asList(result));
-                        }
-                        if (arrayList != null) {
-                            categoryAdapter = new CategoryAdapter(context, arrayList);
-                            category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
-                            category_recycle.setAdapter(categoryAdapter);
-                        } else {
+                        if (workName.trim().equalsIgnoreCase("no")) {
                             Toasty.error(context, "Any Category Not Found", Toast.LENGTH_SHORT).show();
+                        } else {
+                            MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
+                            for (Result result : myPojo.getResult()) {
+                                arrayList.addAll(Arrays.asList(result));
+                            }
+                            if (arrayList != null) {
+                                categoryAdapter = new CategoryAdapter(context, arrayList);
+                                category_recycle.setLayoutManager(new GridLayoutManager(context, 2));
+                                category_recycle.setAdapter(categoryAdapter);
+                            } else {
+                                Toasty.error(context, "Any Category Not Found", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
                         Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show();
