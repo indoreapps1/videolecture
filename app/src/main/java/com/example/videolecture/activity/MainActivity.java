@@ -34,6 +34,8 @@ import com.example.videolecture.fragment.PolicyFragment;
 import com.example.videolecture.fragment.ProductFragment;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,5 +192,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

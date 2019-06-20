@@ -112,7 +112,10 @@ public class ProductFragment extends Fragment {
     }
     @Override
     public void onPause() {
-
+        if (adView != null) {
+            adView.pause();
+        }
+        JCVideoPlayer.releaseAllVideos();
         super.onPause();
     }
 
