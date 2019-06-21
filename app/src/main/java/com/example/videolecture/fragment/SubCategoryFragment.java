@@ -2,6 +2,7 @@ package com.example.videolecture.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
+import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.Utility;
 import com.google.gson.Gson;
 
@@ -93,6 +95,7 @@ public class SubCategoryFragment extends Fragment {
     ImageView image_view;
     TextView text_view;
     List<Result> resultList;
+    boolean CheckOrientation = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +109,19 @@ public class SubCategoryFragment extends Fragment {
         Glide.with(context).load(category_image).placeholder(R.drawable.logo).into(image_view);
         text_view.setText(category_text);
         setSubCategory();
+        chechPortaitAndLandSacpe();
         return view;
+    }
+
+    //chech Portait And LandSacpe Orientation
+    public void chechPortaitAndLandSacpe() {
+        if (CompatibilityUtility.isTablet(getActivity())) {
+            CheckOrientation = true;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            CheckOrientation = false;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void setSubCategory() {
@@ -121,18 +136,16 @@ public class SubCategoryFragment extends Fragment {
                 public void onDone(String workName, boolean isComplete) {
                     dialog.dismiss();
                     if (isComplete) {
-                        if (!workName.trim().equalsIgnoreCase("no")){
+                        if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
                             for (Result result : myPojo.getResult()) {
                                 resultList.addAll(Arrays.asList(result));
                             }
-                            if (resultList != null && resultList.size()>0) {
+                            if (resultList != null && resultList.size() > 0) {
                                 recycle_sub_category.setLayoutManager(new LinearLayoutManager(context));
                                 recycle_sub_category.setAdapter(new SubCategoryAdapter(context, resultList));
                             }
-                        }
-
-                        else {
+                        } else {
                             Toasty.error(context, "No data found", Toast.LENGTH_SHORT).show();
                         }
 

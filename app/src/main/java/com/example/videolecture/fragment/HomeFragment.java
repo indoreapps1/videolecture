@@ -2,6 +2,7 @@ package com.example.videolecture.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +31,7 @@ import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
+import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.Utility;
 import com.example.videolecture.viewpagerindicator.CirclePageIndicator;
 import com.google.android.gms.ads.AdRequest;
@@ -105,7 +107,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> ImagesArray;
     private AdView adView, adView2;
     AdRequest adRequest;
-
+    boolean CheckOrientation = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,9 +122,20 @@ public class HomeFragment extends Fragment {
         adView2.loadAd(adRequest);
         setCategoryApi();
         getPagerData();
+        chechPortaitAndLandSacpe();
         return view;
     }
 
+    //chech Portait And LandSacpe Orientation
+    public void chechPortaitAndLandSacpe() {
+        if (CompatibilityUtility.isTablet(getActivity())) {
+            CheckOrientation = true;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            CheckOrientation = false;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
     @Override
     public void onPause() {
         if (adView != null) {

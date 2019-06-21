@@ -1,5 +1,6 @@
 package com.example.videolecture.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.videolecture.R;
+import com.example.videolecture.utilities.CompatibilityUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,11 +56,25 @@ public class PolicyFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    boolean CheckOrientation = false;
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_policy, container, false);
+        view= inflater.inflate(R.layout.fragment_policy, container, false);
+        chechPortaitAndLandSacpe();
+        return view;
+    }
+
+    //chech Portait And LandSacpe Orientation
+    public void chechPortaitAndLandSacpe() {
+        if (CompatibilityUtility.isTablet(getActivity())) {
+            CheckOrientation = true;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            CheckOrientation = false;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import com.example.videolecture.framework.IAsyncWorkCompletedCallback;
 import com.example.videolecture.framework.ServiceCaller;
 import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
+import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.ExpandableTextView;
 import com.example.videolecture.utilities.ReadMoreTextView;
 import com.example.videolecture.utilities.Utility;
@@ -97,7 +99,7 @@ public class ProductFragment extends Fragment {
     float ratedValue;
     private AdView adView;
     AdRequest adRequest;
-
+    boolean CheckOrientation = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,7 +110,19 @@ public class ProductFragment extends Fragment {
         getProductData();
         uploadQues();
         showQuesAns();
+        chechPortaitAndLandSacpe();
         return view;
+    }
+
+    //chech Portait And LandSacpe Orientation
+    public void chechPortaitAndLandSacpe() {
+        if (CompatibilityUtility.isTablet(getActivity())) {
+            CheckOrientation = true;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            CheckOrientation = false;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     @Override
     public void onPause() {
@@ -184,6 +198,7 @@ public class ProductFragment extends Fragment {
     }
 
     private void init() {
+
         adView = (AdView) view.findViewById(R.id.ad_view);
         adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);

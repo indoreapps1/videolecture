@@ -1,6 +1,7 @@
 package com.example.videolecture.fragment;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.videolecture.R;
 import com.example.videolecture.activity.MainActivity;
+import com.example.videolecture.utilities.CompatibilityUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,7 +65,7 @@ public class ConditionsFragment extends Fragment {
     Context context;
     View view;
     TextView terms;
-
+    boolean CheckOrientation = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,9 +75,19 @@ public class ConditionsFragment extends Fragment {
 //        ((AppCompatActivity) context).getSupportActionBar().setTitle("Your Title");
         terms=view.findViewById(R.id.terms);
 //        terms.setText(R.string.terms_condition+R.string.gmail);
+        chechPortaitAndLandSacpe();
         return view;
     }
-
+    //chech Portait And LandSacpe Orientation
+    public void chechPortaitAndLandSacpe() {
+        if (CompatibilityUtility.isTablet(getActivity())) {
+            CheckOrientation = true;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            CheckOrientation = false;
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
 //    @Override
 //    public void onResume() {
 //        super.onResume();
