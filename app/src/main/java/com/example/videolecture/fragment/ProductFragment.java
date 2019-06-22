@@ -100,6 +100,7 @@ public class ProductFragment extends Fragment {
     private AdView adView;
     AdRequest adRequest;
     boolean CheckOrientation = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -124,6 +125,7 @@ public class ProductFragment extends Fragment {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
+
     @Override
     public void onPause() {
         if (adView != null) {
@@ -148,6 +150,7 @@ public class ProductFragment extends Fragment {
         }
         super.onDestroy();
     }
+
     private void getProductData() {
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
@@ -161,24 +164,26 @@ public class ProductFragment extends Fragment {
                     if (isComplete) {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
-                            for (Result result : myPojo.getResult()) {
-                                if (result != null) {
-                                    productId = result.getProductId();
-                                    currentRating = result.getCurrentRating();
-                                    url = result.getVideo();
-                                    title = result.getTitle();
-                                    description = result.getDescription();
-                                    video_player.setUp(url, video_player.SCREEN_LAYOUT_NORMAL);
-                                    if (result.getTotalRating() != null) {
-                                        txt_review.setText(result.getTotalRating() + "*");
-                                    } else {
-                                        txt_review.setText(0 + "*");
-                                    }
-                                    txt_title.setText(title);
-                                    txt_description.setText(description);
+                            if (myPojo != null) {
+                                for (Result result : myPojo.getResult()) {
+                                    if (result != null) {
+                                        productId = result.getProductId();
+                                        currentRating = result.getCurrentRating();
+                                        url = result.getVideo();
+                                        title = result.getTitle();
+                                        description = result.getDescription();
+                                        video_player.setUp(url, video_player.SCREEN_LAYOUT_NORMAL);
+                                        if (result.getTotalRating() != null) {
+                                            txt_review.setText(result.getTotalRating() + "*");
+                                        } else {
+                                            txt_review.setText(0 + "*");
+                                        }
+                                        txt_title.setText(title);
+                                        txt_description.setText(description);
 //                                makeTextViewResizable(DetailTv, 3, "See More", true);
-                                    txt_time.setText(result.getTime());
-                                    manageRatingBar();
+                                        txt_time.setText(result.getTime());
+                                        manageRatingBar();
+                                    }
                                 }
                             }
 
@@ -225,7 +230,6 @@ public class ProductFragment extends Fragment {
             }
         });
     }
-
 
 
     private void uploadQues() {
