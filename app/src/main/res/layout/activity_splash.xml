@@ -21,7 +21,7 @@
     <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Welcome\n Fans of Mufti Akmal Sahab"
+    android:text="Welcome To\n Fans of Mufti Akmal Sahab"
     android:textColor="@color/colorPrimaryDark"
     android:textStyle="bold"
     android:textSize="30sp"
