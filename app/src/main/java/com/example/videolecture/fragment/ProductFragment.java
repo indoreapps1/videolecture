@@ -152,6 +152,7 @@ public class ProductFragment extends Fragment {
     }
 
     private void getProductData() {
+//        Toast.makeText(context, "--"+loginid, Toast.LENGTH_SHORT).show();
         if (Utility.isOnline(context)) {
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setMessage("Loading Data..");
@@ -160,7 +161,9 @@ public class ProductFragment extends Fragment {
             serviceCaller.callAllProductData(productId, loginid, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
-                    dialog.dismiss();
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     if (isComplete) {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
@@ -210,6 +213,7 @@ public class ProductFragment extends Fragment {
         reycycle_ques_ans = view.findViewById(R.id.reycycle_ques_ans);
         SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         loginid = preferences.getInt("id", 0);
+//        Toast.makeText(context, "--"+loginid, Toast.LENGTH_SHORT).show();
         dbHelper = new DbHelper(context);
         text_view = view.findViewById(R.id.text_view);
         video_player = view.findViewById(R.id.video_player);
@@ -285,7 +289,9 @@ public class ProductFragment extends Fragment {
             serviceCaller.callShowQuesAnsData(loginid, productId, new IAsyncWorkCompletedCallback() {
                 @Override
                 public void onDone(String workName, boolean isComplete) {
-                    dialog.dismiss();
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     if (isComplete) {
                         if (!workName.trim().equalsIgnoreCase("no")) {
                             MyPojo myPojo = new Gson().fromJson(workName, MyPojo.class);
@@ -336,7 +342,7 @@ public class ProductFragment extends Fragment {
 
     private void manageRatingBar() {
         ratingbar = view.findViewById(R.id.rating);
-        if (currentRating != null && !currentRating.equalsIgnoreCase("")) {
+        if (currentRating != null && !currentRating.equalsIgnoreCase("0")) {
             ratingbar.setRating(Float.parseFloat(currentRating));
             ratingbar.setClickable(false);
             ratingbar.setSelected(false);

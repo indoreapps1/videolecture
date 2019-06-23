@@ -3,11 +3,14 @@ package com.example.videolecture.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.Utility;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -106,7 +110,16 @@ public class SubCategoryFragment extends Fragment {
         recycle_sub_category = view.findViewById(R.id.recycle_sub_category);
         image_view = view.findViewById(R.id.image_view);
         text_view = view.findViewById(R.id.text_view);
-        Glide.with(context).load(category_image).placeholder(R.drawable.logo).into(image_view);
+        byte[] decodedString = Base64.decode(category_image, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (category_image.equalsIgnoreCase("")) {
+            Glide.with(context).load(R.drawable.logo).into(image_view);
+        } else {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Glide.with(context).load(decodedByte).into(image_view);
+        }
+//        Glide.with(context).load(category_image).placeholder(R.drawable.logo).into(image_view);
         text_view.setText(category_text);
         setSubCategory();
         chechPortaitAndLandSacpe();

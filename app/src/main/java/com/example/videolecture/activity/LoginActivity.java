@@ -47,9 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();
                                 if (isComplete) {
-                                    Toast.makeText(LoginActivity.this, "Otp Send Successfully", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
-                                    intent.putExtra("phone", mPhone);
+//                                    Toast.makeText(LoginActivity.this, "Otp Send Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("phone", mPhone);
+                                    editor.apply();
                                     startActivity(intent);
                                     finish();
                                     edt_phone.setText("");

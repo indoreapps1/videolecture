@@ -103,7 +103,7 @@ public class ServiceCaller {
     }
 
     //    call otp data
-    public void callOtpData(final String phone, final String otp, final IAsyncWorkCompletedCallback workCompletedCallback) {
+    public void callOtpData(final String phone, final IAsyncWorkCompletedCallback workCompletedCallback) {
         final String URL = Contants.BASE_URL + Contants.otpverify;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -120,7 +120,7 @@ public class ServiceCaller {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("phone", phone);
-                params.put("otp", otp);
+//                params.put("otp", otp);
                 return params;
             }
         };
@@ -181,10 +181,10 @@ public class ServiceCaller {
     }
 
 
-//    call upload ques data
-    public void callUploadQuesData(final int loginId, final String ques, final String productId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
-        final String URL= Contants.BASE_URL+Contants.UploadQuesAns;
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    //    call upload ques data
+    public void callUploadQuesData(final int loginId, final String ques, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.UploadQuesAns;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 asyncWorkCompletedCallback.onDone(response, true);
@@ -194,10 +194,10 @@ public class ServiceCaller {
             public void onErrorResponse(VolleyError error) {
                 asyncWorkCompletedCallback.onDone(error.getMessage(), false);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("question", ques);
                 params.put("productId", productId);
@@ -210,10 +210,10 @@ public class ServiceCaller {
         AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
     }
 
-//      call show ques ans data
-    public void callShowQuesAnsData(final int loginId, final String productId, final  IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
-        final String URL= Contants.BASE_URL+Contants.GetQuesAns;
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    //      call show ques ans data
+    public void callShowQuesAnsData(final int loginId, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.GetQuesAns;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 asyncWorkCompletedCallback.onDone(response, true);
@@ -223,10 +223,10 @@ public class ServiceCaller {
             public void onErrorResponse(VolleyError error) {
                 asyncWorkCompletedCallback.onDone(error.getMessage(), false);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("productId", productId);
                 return params;
@@ -238,10 +238,10 @@ public class ServiceCaller {
     }
 
 
-//      call upload ques ans data
-    public void callUploadQuesAnsData(final int loginId, final String ques, final String productId, final String ans,final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
-        final String URL= Contants.BASE_URL+Contants.UploadQuesAns;
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    //      call upload ques ans data
+    public void callUploadQuesAnsData(final int loginId, final String ques, final String productId, final String ans, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.UploadQuesAns;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 asyncWorkCompletedCallback.onDone(response, true);
@@ -251,10 +251,10 @@ public class ServiceCaller {
             public void onErrorResponse(VolleyError error) {
                 asyncWorkCompletedCallback.onDone(error.getMessage(), false);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("question", ques);
                 params.put("productId", productId);
@@ -269,9 +269,9 @@ public class ServiceCaller {
 
 
     //      call upload rating data
-    public void callUploadRatingData(final int loginId, final float rating, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback ){
-        final String URL= Contants.BASE_URL+Contants.UploadRating;
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    public void callUploadRatingData(final int loginId, final float rating, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.UploadRating;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 asyncWorkCompletedCallback.onDone(response, true);
@@ -281,10 +281,10 @@ public class ServiceCaller {
             public void onErrorResponse(VolleyError error) {
                 asyncWorkCompletedCallback.onDone(error.getMessage(), false);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("loginId", String.valueOf(loginId));
                 params.put("rating", String.valueOf(rating));
                 params.put("productId", productId);

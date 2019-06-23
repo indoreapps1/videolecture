@@ -51,7 +51,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
                         dialog.setMessage("Verify Otp Wait.....");
                         dialog.show();
                         ServiceCaller serviceCaller = new ServiceCaller(OtpVerificationActivity.this);
-                        serviceCaller.callOtpData(phone, otp, new IAsyncWorkCompletedCallback() {
+                        serviceCaller.callOtpData(phone, new IAsyncWorkCompletedCallback() {
                             @Override
                             public void onDone(String workName, boolean isComplete) {
                                 dialog.dismiss();
