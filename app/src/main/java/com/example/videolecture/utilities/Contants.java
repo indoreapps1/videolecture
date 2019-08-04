@@ -41,7 +41,7 @@ public class Contants {
     public static final String plans = "values";
     public static final String  Login= "login.php";
     public static final String otpverify = "otpverifiy.php";
-    public static final String GetUserProfile = "Login/GetUserProfile";
+    public static final String uploadToken = "uploadToken.php";
     public static final String UpdateProfile = "Login/UpdateProfile";
     public static final String UploadRating = "uploadRating.php";
     public static final String UploadQuesAns = "uploadQuestionAns.php";
@@ -56,22 +56,4 @@ public class Contants {
     public static final String GetAllBestSell = "GetAllBestSell.php";
     public static final String GetAllNewArrive = "GetAllNewArrive.php";
     public static final String GetProductData = "getProductData.php";
-    public static final String GetAllStoreByLocality = "Store/GetAllStoreByLocality";
-    public static final String GetStoreDetailsById = "Store/GetStoreDetailsById";
-    public static final String ApplyPromoCode = "PromoCode/ApplyPromoCode";
-    public static final String CreateOrder = "Order/CreateOrder";
-    public static final String GetOrderByOrderNumber = "Order/GetOrderByOrderNumber";
-    public static final String TrackOrderStatus = "Order/TrackOrderStatus";
-    public static final String GetFavouriteStoreByUser = "Store/GetFavouriteStoreByUser";
-    public static final String GetMyAllOrderHistory = "Order/MyAllOrderList";
-    public static final String GetAllOrderByUser = "Order/GetAllOrderByUser";
-    public static final String AddUpdateFavourite = "Store/AddUpdateFavouriteStoreByUser";
-    public static final String UploadProfilePicture = "UploadProfilePicture/UploadProfilePicture";
-    public static final String SocialUserLogin = "Login/SocialUserLogin";
-    public static final String RemoveFavouriteStoreByUser = "Store/RemoveFavouriteStoreByUser";
-    public static final String CreatePaymentOrder = "PaymentGateway/CreatePaymentOrder";
-    public static final String PaymentConfirmation = "Payment/PaymentConfirmation";
-    public static final String Notification = "Notification/SendNotification";
-    public static final String GetAllMenuListByStoreId = "MenuMaster/GetAllMenuListByStoreId";
-    public static final String PaymentConfirmforCOD = "Payment/PaymentConfirmforCOD";
 }

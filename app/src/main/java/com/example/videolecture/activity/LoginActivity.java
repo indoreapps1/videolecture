@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
     //for hid keyboard when tab outside edittext box
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {

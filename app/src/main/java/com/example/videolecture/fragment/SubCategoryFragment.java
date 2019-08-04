@@ -29,6 +29,9 @@ import com.example.videolecture.model.MyPojo;
 import com.example.videolecture.model.Result;
 import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.Utility;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -100,6 +103,7 @@ public class SubCategoryFragment extends Fragment {
     TextView text_view;
     List<Result> resultList;
     boolean CheckOrientation = false;
+    InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,7 +127,27 @@ public class SubCategoryFragment extends Fragment {
         text_view.setText(category_text);
         setSubCategory();
         chechPortaitAndLandSacpe();
+        adInst();
         return view;
+    }
+
+    private void adInst() {
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
     //chech Portait And LandSacpe Orientation

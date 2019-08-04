@@ -33,10 +33,10 @@
                 android:id="@+id/item_txt_ques_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:paddingRight="@dimen/dim_value_5"
-                android:layout_alignParentRight="true"
                 android:textColor="@color/colorBlack"
                 android:textSize="10sp" />
         </RelativeLayout>

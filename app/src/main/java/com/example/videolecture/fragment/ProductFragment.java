@@ -37,8 +37,10 @@ import com.example.videolecture.utilities.CompatibilityUtility;
 import com.example.videolecture.utilities.ExpandableTextView;
 import com.example.videolecture.utilities.ReadMoreTextView;
 import com.example.videolecture.utilities.Utility;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -100,6 +102,7 @@ public class ProductFragment extends Fragment {
     private AdView adView;
     AdRequest adRequest;
     boolean CheckOrientation = false;
+    InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -233,8 +236,27 @@ public class ProductFragment extends Fragment {
                 startActivity(sendIntent);
             }
         });
+        adInst();
     }
 
+    private void adInst() {
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 
     private void uploadQues() {
         btn_submit = view.findViewById(R.id.btn_submit);

@@ -210,6 +210,32 @@ public class ServiceCaller {
         AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
     }
 
+    //    call upload ques data
+    public void callUploadTokenData(final String token, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
+        final String URL = Contants.BASE_URL + Contants.uploadToken;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncWorkCompletedCallback.onDone(response, true);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncWorkCompletedCallback.onDone(error.getMessage(), false);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(stringRequest);//, tag_json_obj);
+    }
+
     //      call show ques ans data
     public void callShowQuesAnsData(final int loginId, final String productId, final IAsyncWorkCompletedCallback asyncWorkCompletedCallback) {
         final String URL = Contants.BASE_URL + Contants.GetQuesAns;
@@ -227,7 +253,7 @@ public class ServiceCaller {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("loginId", String.valueOf(loginId));
+//                params.put("loginId", String.valueOf(loginId));
                 params.put("productId", productId);
                 return params;
             }
